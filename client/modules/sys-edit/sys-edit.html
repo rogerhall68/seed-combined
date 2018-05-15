@@ -1,0 +1,123 @@
+<style type="text/css">
+  	.miSmall { font-size: 9px; font-weight: 100; padding: 0px 4px 0px 4px; }
+  	.miActions { font-size: 10px; font-weight: 100; padding: 0px; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	.sysEditForm {}
+  	.sysEditRow {}
+  	.sysEditField {}
+  	.sysEditCaption { font-size: 18px; font-weight: 100; height: 24px; padding: 2px; border: #CCC solid 0px; }
+  	.sysEditText { height: 36px; background-color: #FFF; border-radius: 4px; border: #CCC solid 1px; padding: 0px 0px 0px 8px; width: 100%; }
+  	.miReadOnly { background-color: #EEE; padding: 6px 0px 0px 8px; }
+  	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<h1>{{cntlr.table.caption}}</h1>
+		</div>
+	</div>
+
+	<form name="user">
+		<div class="form-group row">
+		  	<div class="col-sm-2" ng-hide="attr.is_primary_key && !cntlr.table.showIds" ng-repeat="attr in cntlr.table.attrs">
+		  		<div class="sysEditCaption">{{ attr.attrib_label_singular }}</div>
+			</div>
+		</div>
+		<div class="form-group row" ng-repeat="(r, row) in cntlr.table.data">
+			<div class="col-sm-2" ng-hide="cntlr.table.attrs[c].is_primary_key && !cntlr.table.showIds" ng-repeat="(c, col) in cntlr.table.data[r]">
+				<input class="sysEditText" type="text" 
+					   ng-show="!cntlr.table.attrs[c].is_primary_key" 
+					   ng-change="cntlr.table.change(r,c)" 
+					   ng-blur="cntlr.table.blur(r,c)" 
+					   ng-model="col.value"/>
+				<div class="sysEditText miReadOnly" ng-show="cntlr.table.attrs[c].is_primary_key">{{col.value}}</div>
+			</div>
+			<div class="col-sm-1" ng-show="$last">
+				<button>Thing</button>
+			</div>
+		</div>
+	</form>
+
+	<div class="row">
+		{{ cntlr.table.data }}
+		&nbsp; <br>
+		&nbsp; <br>
+		{{ cntlr.table.tmpl }}
+	</div>
+</div>
+
+<!--
+
+				<input class="sysEditText" ng-disabled="false" type="text" ng-show="cntlr.table.attrs[c].type=='text' && !cntlr.table.attrs[c].readOnly" ng-model="col.value"/>
+
+
+<script type="text/ng-template" id="mi-sys-edit-text.html">
+<div>
+	<div class="sysEditText">
+		<input ng-disabled="value.hidden" type="text" value="{{ value.value }}"/>
+	</div>
+</div>
+</script>
+
+	<form name="user">
+		<div class="form-group row">
+		  	<div class="col-sm-3" ng-repeat="attr in cntlr.table.attrs">
+		  		{{ attr.name }}
+			</div>
+		</div>
+		<div class="form-group row" ng-repeat="row in cntlr.table.data">
+			{{ $index }}
+			<div class="col-sm-3" ng-repeat="value in row">
+				{{ row[$index] }}
+				<mi-sys-edit-text ng-model="value"></mi-sys-edit-text>
+			</div>			
+		</div>
+	</form>
+
+
+
+	<div class="row sysEditForm">
+		<mi-sys-edit-field ng-repeat="field in cntlr.fields"></mi-sys-edit-field>
+	</div>
+<script type="text/ng-template" id="mi-sys-edit-field.html">
+<div>
+	<div class="sysEditRow row">
+		<mi-sys-edit-text ng-model="field" ng-show="field.type=='text'"></mi-sys-edit-text>
+		<mi-sys-edit-list ng-model="field" ng-show="field.type=='list'"></mi-sys-edit-list>
+		<mi-sys-edit-multi ng-show=""></mi-sys-edit-multi>
+		<mi-sys-edit-custom ng-show=""></mi-sys-edit-custom>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-sys-edit-list.html">
+<div>
+	<div class="sysEditField row">
+		<div class="sysEditCaption">{{ field.caption }}</div>
+		<div class="sysEditText">LIST{{ field.value }}</div>
+	</div>
+</div>
+</script>
+
+		<div class="sysEditCaption">{{ field.caption }}</div>
+
+	<div ng-mousemove="cntlr.mousemove($event)" class="miFreezer row">
+
+
+<script type="text/ng-template" id="mi-sys-edit-list.html">
+<div class="miHeadingCenter">
+	<ol class="nya-bs-select" 
+		title="Select sysEdit" 
+		id="sysEditSelect" 
+		ng-model="cntlr.sysEdit"
+
+		ng-change="cntlr.selectFreezer(cntlr.sysEdit.store_item_id)">
+		<li nya-bs-option="r in cntlr.sysEdits">
+			<a> {{r.store_item_name}} </a>
+		</li>
+	</ol>
+</div>
+</script>
+-->

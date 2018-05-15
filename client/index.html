@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en" ng-app="tmiApp" ng-controller="App">
+<head>
+	<title>Workbench</title> 
+	<meta description="Laboratory Specimen Management">
+	<meta charset="utf-8"> <!-- AngularJS Best Practices Explained by Hack Reactor Grad... 4:43 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-en_US.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.css">
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+	<script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-cache/dist/angular-cache.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <!--script src="bower_components/ng-focus-if/focusIf.min.js"></script-->
+
+    <link rel="stylesheet" type="text/css" href="bower_components/AngularJS-Toaster/toaster.min.css">
+    <script src="bower_components/AngularJS-Toaster/toaster.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-hotkeys/build/hotkeys.min.css">
+	<script src="bower_components/angular-hotkeys/build/hotkeys.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="app-controller.js"></script>
+	<script src="modules/constants/sessionData.js"></script>
+
+	<!--script src="services/loginService.js"></script-->
+	<script src="services/cacheService.js"></script>
+	<script src="services/crudService.js"></script>
+	<script src="services/securityService.js"></script>
+	<script src="services/sessionService.js"></script>
+	<script src="services/storageService.js"></script>
+	<script src="services/systemService.js"></script>
+
+	<script src="modules/login/login.js"></script>
+
+	<script src="modules/sys/controller.js"></script>
+	<script src="modules/sys/service.js"></script>
+	<script src="modules/admin/admin.js"></script>
+	<script src="modules/admin/admin-controller.js"></script>
+
+	<script src="modules/address/address.js"></script>
+	<script src="modules/address/address-controller.js"></script>
+	<script src="modules/address/address-system-controller.js"></script>
+
+	<script src="modules/organization/organization.js"></script>
+	<script src="modules/organization/organization-controller.js"></script>
+	<script src="modules/organization/organization-system-controller.js"></script>
+
+	<!--script src="modules/storage/controller.js"></script>
+	<script src="modules/storage/service.js"></script-->
+	<script src="modules/storage-type/storage-type.js"></script>
+	<script src="modules/storage-type/storage-type-controller.js"></script>
+	<script src="modules/storage-type/storage-type-service.js"></script>
+	<script src="modules/storage-type/storage-type-directive-new.js"></script>
+	<script src="modules/storage-config/storage-config.js"></script>
+	<script src="modules/storage-config/storage-config-controller.js"></script>
+	<script src="modules/storage-config/storage-config-service.js"></script>
+	<script src="modules/storage-config/storage-config-directive-new.js"></script>
+	<script src="modules/storage-builder/storage-builder.js"></script>
+	<script src="modules/storage-builder/storage-builder-controller.js"></script>
+	<script src="modules/storage-builder/storage-builder-service.js"></script>
+	<script src="modules/storage-builder/storage-builder-directive-new.js"></script>
+
+	<script src="modules/security-user/security-user.js"></script>
+	<script src="modules/security-user/security-user-controller.js"></script>
+	<script src="modules/security-user/security-user-service.js"></script>
+	<script src="modules/security-user/security-user-directive-new.js"></script>
+	<script src="modules/security-role/security-role.js"></script>
+	<script src="modules/security-role/security-role-controller.js"></script>
+	<script src="modules/security-role/security-role-service.js"></script>
+	<script src="modules/security-role/security-role-directive-module.js"></script>
+	<script src="modules/security-module/security-module.js"></script>
+	<script src="modules/security-module/security-module-controller.js"></script>
+	<script src="modules/security-module/security-module-service.js"></script>
+	<script src="modules/security-module/security-module-directive-new.js"></script>
+	<script src="modules/security-group/security-group.js"></script>
+	<script src="modules/security-group/security-group-controller.js"></script>
+	<script src="modules/security-group/security-group-service.js"></script>
+	<script src="modules/security-group/security-group-directive-new.js"></script>
+
+	<script src="modules/link-test/link-test.js"></script>
+	<script src="modules/link-test/link-test-controller.js"></script>
+	<script src="modules/link-test/link-test-directive-parent.js"></script>
+	<script src="modules/link-test/link-test-directive-child.js"></script>
+
+	<script src="modules/sop/sop.js"></script>
+	<script src="modules/sop/sop-controller.js"></script>
+	<script src="modules/sop/sop-service.js"></script>
+	<script src="modules/sop/sop-service-build.js"></script>
+	<script src="modules/sop/sop-directive-list.js"></script>
+
+	<script src="modules/sop-procedure/sop-procedure.js"></script>
+	<script src="modules/sop-procedure/sop-procedure-controller.js"></script>
+	<script src="modules/sop-procedure/sop-procedure-service.js"></script>
+	<!--script src="modules/sop-procedure/sop-procedure-service-build.js"></script-->
+	<script src="modules/sop-procedure/sop-procedure-directive-list.js"></script>
+
+	<script src="modules/sop-worksheet/sop-worksheet.js"></script>
+	<script src="modules/sop-worksheet/sop-worksheet-controller.js"></script>
+	<script src="modules/sop-worksheet/sop-worksheet-service.js"></script>
+	<!--script src="modules/sop-worksheet/sop-worksheet-service-build.js"></script-->
+	<!--script src="modules/sop-worksheet/sop-worksheet-directive-browser.js"></script-->
+	<script src="modules/sop-worksheet/sop-worksheet-directive-list.js"></script>
+	<script src="modules/sop-worksheet/sop-worksheet-directive-form.js"></script>
+	<script src="modules/sop-worksheet/sop-worksheet-directive-row.js"></script>
+	<script src="modules/sop-worksheet/sop-worksheet-directive-field.js"></script>
+
+	<script src="modules/sop-variable/sop-variable.js"></script>
+	<script src="modules/sop-variable/sop-variable-controller.js"></script>
+	<script src="modules/sop-variable/sop-variable-service.js"></script>
+	<script src="modules/sop-variable/sop-variable-directive-list.js"></script>
+
+	<script src="modules/sop-list/sop-list.js"></script>
+	<script src="modules/sop-list/sop-list-controller.js"></script>
+	<script src="modules/sop-list/sop-list-service.js"></script>
+	<script src="modules/sop-list/sop-list-directive-list.js"></script>
+
+	<script src="modules/specimen/specimen.js"></script>
+	<script src="modules/specimen/specimen-controller.js"></script>
+	<script src="modules/specimen/specimen-system-controller.js"></script>
+
+	<script src="modules/storage/freezer.js"></script>
+	<script src="modules/storage/freezer-controller.js"></script>
+	<script src="modules/storage/freezer-service.js"></script>
+	<script src="modules/storage/freezer-service-build.js"></script>
+	<!--script src="modules/storage/freezer-directive-display.js"></script-->
+	<script src="modules/storage/freezer-directive-list.js"></script>
+	<script src="modules/storage/freezer-directive-favorites.js"></script>
+	<script src="modules/storage/freezer-directive-browser.js"></script>
+	<script src="modules/storage/freezer-directive-component.js"></script>
+	<script src="modules/storage/freezer-directive-component-2.js"></script>
+	<script src="modules/storage/freezer-directive-container.js"></script>
+	<script src="modules/storage/freezer-directive-container-display.js"></script>
+	<script src="modules/storage/freezer-directive-product.js"></script>
+	<script src="modules/storage/freezer-directive-modal.js"></script>
+	<script src="modules/storage/freezer-directive-navigation.js"></script>
+
+	<!--
+	<script src="modules/freezer/freezer.js"></script>
+	<script src="modules/freezer/freezer-controller.js"></script>
+	<script src="modules/freezer/freezer-service.js"></script>
+	<script src="modules/freezer/freezer-service-build.js"></script>
+	<script src="modules/freezer/freezer-directive-display.js"></script>
+	<script src="modules/freezer/freezer-directive-select.js"></script>
+	<script src="modules/freezer/freezer-directive-component.js"></script>
+	<script src="modules/freezer/freezer-directive-component-2.js"></script>
+	<script src="modules/freezer/freezer-directive-container.js"></script>
+	<script src="modules/freezer/freezer-directive-product.js"></script>
+	<script src="modules/freezer/freezer-directive-modal.js"></script>
+	-->
+
+	<script src="modules/sys-edit/sys-edit.js"></script>
+	<script src="modules/sys-edit/sys-edit-controller.js"></script>
+	<script src="modules/sys-edit/sys-edit-service.js"></script>
+	<!--
+	<script src="modules/sys-edit/sys-edit-directive-field.js"></script>
+	<script src="modules/sys-edit/sys-edit-directive-list.js"></script>
+	<script src="modules/sys-edit/sys-edit-directive-text.js"></script>
+	-->
+
+	<script src="modules/sys-meta/sys-meta.js"></script>
+	<script src="modules/sys-meta/sys-meta-controller.js"></script>
+	<script src="modules/sys-meta/sys-meta-service.js"></script>
+
+	<script src="modules/sys-profile/sys-profile.js"></script>
+	<script src="modules/sys-profile/sys-profile-controller.js"></script>
+	<script src="modules/sys-profile/sys-profile-service.js"></script>
+
+	<script src="modules/workbench/workbench.js"></script>
+	<script src="modules/workbench/workbench-controller.js"></script>
+	<script src="modules/workbench/workbench-service.js"></script>
+	<script src="modules/workbench/workbench-service-build.js"></script>
+	<script src="modules/workbench/workbench-directive-display.js"></script>
+	<script src="modules/workbench/workbench-directive-product.js"></script>
+
+	<script src="modules/view-edit/view-edit.js"></script>
+	<script src="modules/view-edit/view-edit-controller.js"></script>
+	<script src="modules/view-edit/view-edit-directive.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/nya-bootstrap-select/dist/css/nya-bs-select.min.css">
+	<script src="bower_components/nya-bootstrap-select/dist/js/nya-bs-select.min.js"></script>
+
+	<style type="text/css">
+		html { height: 102%; }
+	  	body { padding-top: 50px; }
+	  	.labShim { padding-top: 8px; }
+	  	.labSelect { width: 80px; }
+	</style>
+	<script type="text/javascript">
+		function doThing(id) { console.log('doThing(' + id + ')'); }
+	</script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>                        
+	      </button>
+	      <a class="navbar-brand" href="#/workbench">Myeloma Institute at UAMS</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar">
+	      <!--ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Home</a></li>
+	      </ul-->
+	      <ul ng-show="tmi_session.user_token != null" class="nav navbar-nav navbar-right">
+	      	<!--
+	        <li><a href="#/workbench">Workbench</a></li>
+	        <li><a ng-click="printLabel();">Print</a></li>
+	    	-->
+	        <!--li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="">Project <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#/project">Current</a></li>
+	            <li><a href="#/project_new">Create</a></li>
+	            <li class="dropdown-header">Recent Projects</li>
+	            <li><a href="">Project 1</a></li>
+	            <li><a href="">Project 2</a></li>
+	            <li><a href="">Project 3</a></li>
+	          </ul>
+	        </li-->
+
+       		<li><a href="#/sys/profile">
+       			{{ tmi_session.user_first_name }} 
+       			{{ tmi_session.user_last_name }}
+       		</span> </a></li>
+
+       		<li class="labShim">
+			    <select class="selectpicker labSelect">
+        	    	<option value="1">Accessioning Lab</option>
+            		<option value="2">Johnson Lab</option>
+        		</select>
+       		</li>
+
+<!--
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="">
+	          <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li>Accessioning Lab</li>
+	            <li>Johnson Lab</li>
+	          </ul>
+	        </li>
+-->
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="">SOP <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#/sop">SOP</a></li>
+	            <li><a href="#/sop/procedure">Procedure</a></li>
+	            <li><a href="#/sop/worksheet">Worksheet</a></li>
+	            <li><a href="#/sop/variable">Variable</a></li>
+	            <li><a href="#/sop/list">List</a></li>
+	          </ul>
+	        </li>
+
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="">Storage <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#/freezer">Freezer</a></li>
+	            <li class="dropdown-header">Create</li>
+	            <li><a href="#/storage/builder">Device</a></li>
+	            <li><a href="#/storage/config">Config</a></li>
+	            <li><a href="#/storage/type">Type</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="">Security <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li class="dropdown-header">Users</li>
+	            <li><a href="#/security/user">User</a></li>
+	            <li><a href="#/security/group">Group</a></li>
+	            <li class="dropdown-header">Roles</li>
+	            <li><a href="#/security/role">Role</a></li>
+	            <li><a href="#/security/module">Module</a></li>
+	            <li><a href="#/security/privileges">Privilege</a></li>
+	          </ul>
+	        </li>
+       		<li><a href=""><span class="glyphicon glyphicon-search"></span> </a></li>
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-cog"></span></a>
+	          <ul class="dropdown-menu">
+        		<li><a href="#/lo"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+	            <li><a href="#/admin"><span class="glyphicon glyphicon-globe"></span> Admin</a></li>
+	            <li><a href="#/sys"><span class="glyphicon glyphicon-info-sign"></span> System</a></li>
+	            <li><a href="#/sys/localStorage"><span class="glyphicon glyphicon-info-sign"></span> Local Storage</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container" ui-view></div>
+	<toaster-container></toaster-container>
+</body>
+</html>

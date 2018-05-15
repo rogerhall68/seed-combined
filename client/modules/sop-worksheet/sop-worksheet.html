@@ -1,0 +1,442 @@
+<style type="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: middle; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 16px 6px 0px 0px; }
+	.miHeadingCenter { padding: 25px 0px 0px 0px; }
+
+	.miLeft { height: 20px; padding: 0px; width: 40%; float: left; border: #CCC solid 0px; }
+	.miRight { height: 20px; padding: 0px; margin-left: 40%; text-align: right; vertical-align: top; border: #CCC solid 0px; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: middle; }
+	.miSelected { background-color: #CCFF99; }
+
+	.miCaption { text-align: right; }
+	.miBorder { border: #CCC solid 0px; }
+
+  	.miModalHead { height: 22px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px; width: 100%; }
+  	.miModalBody { background-color: #FFF; font-size: 12px; font-weight: 100; padding: 4px; width: 100%; height: 110px; }
+
+  	.miCheckbox { height: 18px; width: 18px; }
+
+  	.miStatus { 
+  		font-weight: normal; 
+		display: inline-block;
+		
+		padding: 5px 10px;
+		font-size: 18px;
+		line-height: 1.5;
+		border-radius: 0px;
+		
+  		margin-bottom: 0;
+		text-align: right;
+		white-space: nowrap;
+		vertical-align: middle;
+		background-image: none;
+		border: 0px solid transparent;
+   	}
+  	.miStatusEdit { 
+  		color: #FFA500; 
+  	}
+  	.miStatusNew { 
+  		color: #337ab7; 
+  	}
+
+  	.miSelect { padding: 0px 0px 0px 15px; }
+
+  	.miSmall { font-size: 9px; font-weight: 100; padding: 0px 4px 0px 4px; }
+  	.miActions { font-size: 10px; font-weight: 100; padding: 0px; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+
+  	.fixedView { position: fixed; top: 80px; right: 120px; width: 400px; height: 300px; border: 0px solid #FFFFFF; }
+  	.fakeBox { border: 1px solid #FFFFFF; width: 40px; height: 20px; }
+</style>
+
+<div class="container miBorder">
+	<div class="row miBorder">
+		<div class="col-md-2 miBorder">
+			<h1>Worksheet</h1>
+		</div>
+		<div class="col-md-1 miHeadingRight miBorder">
+			<div ng-show="cntlr.status != ''" 
+				 ng-class="{ miStatus: true, 'miStatusNew': cntlr.status == 'New', 'miStatusEdit': cntlr.status == 'Editing' }">
+				{{cntlr.status}}
+			</div>
+		</div>
+		<div class="col-md-3 miBorder">
+			<mi-worksheet-list></mi-worksheet-list>
+		</div>
+		<div class="col-md-2 miHeadingCenter miBorder">
+			<button class="btn btn-primary btn-sm" 
+					ng-click="cntlr.inactivate()" 
+					ng-show="!cntlr.worksheet.canDelete && !cntlr.worksheet.inactive && cntlr.worksheet.id != null">Inactive</button>
+			<button class="btn btn-primary btn-sm" 
+					ng-click="cntlr.activate()" 
+					ng-show="cntlr.worksheet.inactive && cntlr.worksheet.id != null">Active</button>
+			<button class="btn btn-primary btn-sm" 
+					ng-click="cntlr.delete()" 
+					ng-show="cntlr.worksheet.canDelete && cntlr.worksheet.id != null">Delete</button>
+		</div>
+		<div class="col-md-2 miHeadingCenter miBorder">
+			<button class="btn btn-primary btn-sm" ng-click="cntlr.new()">Add Worksheet</button>
+		</div>
+	</div>
+	<div class="form-group row miBorder">
+		<div class="col-sm-1 miBorder"></div>
+	  	<div class="col-sm-2 miCaption miBorder">
+			<label for="worksheetName"> Name </label>
+		</div>
+	  	<div class="col-sm-3 miBorder">
+			<input id="worksheetName" autoFocus 
+				   type="text" 
+				   class="form-control" 
+				   placeholder="Start by creating a unique name" 
+			       ng-disabled="false" 
+				   ng-model="cntlr.worksheet.name" 
+				   ng-blur="cntlr.create()">
+		</div>
+	</div>
+	<div class="form-group row miBorder">
+		<div class="col-sm-1 miBorder"></div>
+	  	<div class="col-sm-2 miCaption miBorder">
+			<label for="worksheetVariableType"> Type </label>
+		</div>
+	  	<div class="col-sm-3 miBorder">
+			<ol class="nya-bs-select" 
+				title="Select worksheet type" 
+				id="variableTypeSelect" 
+			    disabled="cntlr.worksheet.id === null" 
+				ng-model="cntlr.worksheet.variable_type"
+				ng-change="">
+				<li nya-bs-option="variableType in cntlr.variableTypes">
+					<a> {{variableType.name}} </a>
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="form-group row miBorder">
+		<div class="col-sm-1 miBorder"></div>
+	  	<div class="col-sm-2 miCaption miBorder">
+			<label for="worksheetVersion"> Version </label>
+		</div>
+	  	<div class="col-sm-3 miBorder">
+			<input id="worksheetVersion" 
+				   type="text" 
+				   class="form-control" 
+				   placeholder="Use a unique version (e.g. 1.0)" 
+				   ng-disabled="false" 
+				   ng-model="cntlr.worksheet.version" 
+				   ng-change="cntlr.updater.version.change(cntlr.worksheet.version)">
+		</div>
+	</div>
+	<!--mi-worksheet-form ng-repeat="rows in cntlr.worksheet"></mi-worksheet-form-->
+	<mi-worksheet-row ng-repeat="row in cntlr.worksheet.rows" row="{{row}}"></mi-worksheet-row>
+</div>
+
+
+<script type="text/ng-template" id="mi-worksheet-list.html">
+<div class="miHeadingCenter">
+	<ol class="nya-bs-select" 
+		title="Select Worksheet" 
+		id="worksheetSelect" 
+		ng-model="cntlr.worksheet"
+
+		ng-change="cntlr.select(cntlr.worksheet)">
+		<li nya-bs-option="r in cntlr.worksheets">
+			<a> ({{r.name}}) {{r.version}} [ID:{{r.id||"null"}}] </a>
+		</li>
+	</ol>
+</div>
+</script>
+
+<!--script type="text/ng-template" id="mi-worksheet-form.html">
+<div>
+	<mi-worksheet-row ng-repeat="row in cntlr.worksheet.rows" row="{{row}}"></mi-worksheet-row>
+</div>
+</script-->
+
+<script type="text/ng-template" id="mi-worksheet-row.html">
+<div class="form-group row miBorder">
+	<div class="col-sm-1 miBorder"></div>
+	  	<div class="col-sm-2 miCaption miBorder">
+		<label> Row {{row[0].row + 1}} </label>
+	</div>
+  	<div>
+		<div class="col-sm-6 miBorder">
+			<mi-worksheet-field ng-repeat="field in row" field="{{field}}"></mi-worksheet-field>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-worksheet-field.html">
+<div>
+	<div class="row miBorder">
+	  	<div class="col-sm-3 miBorder">
+			<ol class="nya-bs-select" 
+				title="Select Variable Variable" 
+				id="variableVariable" 
+				ng-model="field.variableVar"
+				ng-change="cntlr.selectVariableType(variableType.id)">
+				<li nya-bs-option="variableVar in cntlr.variableVars">
+					<a> ({{variableVar.id}}) {{variableVar.name}} </a>
+				</li>
+			</ol>
+		</div>
+	</div>
+	{{field}}
+	<div class="row miBorder">
+	  	<div class="col-sm-12 miBorder">
+			{{field.caption}}
+		</div>
+	</div>
+  	<div class="row miBorder">
+	  	<div class="row col-sm-2 miBorder">
+			<input id="required" 
+					   type="checkbox" 
+					   ng-show="field.data_type_id != null"
+					   placeholder="required" 
+					   ng-model="field.required" 
+					   ng-change="cntlr.updater()"> <div ng-show="field.data_type_id != null">required</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<!--
+<script type="text/ng-template" id="mi-worksheet-field.html">
+<div>
+	<div class="row miBorder">
+	  	<div class="col-sm-3 miBorder">
+			<ol class="nya-bs-select" 
+				title="Select Variable Variable" 
+				id="variableVariable" 
+				ng-model="field.variableVar"
+				ng-change="cntlr.selectVariableType(variableType.id)">
+				<li nya-bs-option="variableVar in cntlr.variableVars">
+					<a> ({{variableVar.id}}) {{variableVar.name}} </a>
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row miBorder">
+	  	<div class="col-sm-4 miBorder">
+			<input id="caption" 
+					   type="text" 
+					   class="form-control" 
+					   placeholder="Caption" 
+					   ng-model="field.caption" 
+					   ng-change="cntlr.updater()">
+		</div>
+	</div>
+  	<div class="row miBorder">
+	  	<div class="col-sm-2 miBorder">
+	  		<input id="type" 
+					   type="text" 
+					   class="form-control col-sm-2" 
+					   placeholder="Type" 
+					   ng-model="field.type" 
+					   ng-change="cntlr.updater()">
+			<input id="units" 
+					   type="text" 
+					   class="form-control col-sm-2" 
+					   placeholder="Units" 
+					   ng-model="field.units" 
+					   ng-change="cntlr.updater()">
+		</div>
+	  	<div class="col-sm-2 miBorder">
+			<input id="required" 
+					   type="checkbox" 
+					   placeholder="required" 
+					   ng-model="field.required" 
+					   ng-change="cntlr.updater()"> required </br>
+			<input id="constant" 
+					   type="checkbox" 
+					   placeholder="constant" 
+					   ng-model="field.constant" 
+					   ng-change="cntlr.updater()"> constant
+		</div>
+	</div>
+</div>
+</script>
+
+
+<script type="text/ng-template" id="mi-freezer-favorites.html">
+<div class="miHeadingCenter">
+	<ol class="nya-bs-select show-menu-arrow" 
+		title="Recent containers" 
+		id="containerSelect" 
+		ng-model="cntlr.chooser.container" 
+		ng-change="cntlr.chooser.change(cntlr.chooser.config)">	
+		<li nya-bs-option="r in cntlr.objects.configs">
+			<a> {{r.store_config_name}} </a>
+		</li>
+	</ol>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-component.html">
+<div class="miComponent">
+	<div class="miComponentHead" ng-click="cntlr.collapse('truth{{component.id}}');">
+		<div class="miLeft"> {{component.name}} </div>
+		<div class="miInfo miRight">
+			<a ng-click="cntlr.addHere({{component.id}}); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></a>
+		</div>
+	</div>
+	<div class="miComponentBody" ng-show="cntlr.freezer.collapse.index.truth{{component.id}}">
+		<mi-freezer-component-2 ng-repeat="component in component.components"></mi-freezer-component-2>
+		<mi-freezer-container ng-repeat="container in component.containers"></mi-freezer-container>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-component-2.html">
+<div class="miComponent">
+	<div class="miComponentHead">
+		<div class="miLeft" ng-click="cntlr.edit('truth{{component.id}}');">
+			<ng-switch on="cntlr.editIndex.truth{{component.id}}">
+				<div ng-switch-when="true">	
+					<input class="miEditContainer" type="text" ng-model="component.name" auto-focus> 
+				</div>
+				<div ng-switch-when="false"> {{component.name}} </div>
+				<div ng-switch-default> {{component.name}} </div>
+			</ng-switch>
+		</div>
+		<div class="miInfo miRight" ng-click="cntlr.collapse('truth{{component.id}}');">
+			<a ng-click="cntlr.addHere({{component.id}}); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></a>
+		</div>
+	</div>
+	<div ng-show="cntlr.freezer.collapse.index.truth{{component.id}}">
+		<div class="miComponentBody">
+			<mi-freezer-container ng-repeat="container in component.containers"></mi-freezer-container>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-container.html">
+<div ng-class="{ 'miContainer': true }">
+	<div ng-class="{ miLeft: true, 'miSelected': cntlr.selectIndex.truth{{container.id}} }" ng-click="cntlr.edit('truth{{container.id}}');">
+		<ng-switch on="cntlr.editIndex.truth{{container.id}}">
+			<div ng-switch-when="true">	
+				<input class="miEditContainer" type="text" ng-model="container.name" auto-focus> 
+			</div>
+			<div ng-switch-when="false"> {{container.name}} </div>
+			<div ng-switch-default> {{container.name}} </div>
+		</ng-switch>
+	</div>
+	<div ng-class="{ miInfo: true, 'miRight': true, 'miSelected': cntlr.selectIndex.truth{{container.id}} }"
+		 ng-click="cntlr.selectContainer('{{container.id}}');">
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-container-display.html">
+<div ng-mousemove="cntlr.mousemove($event)">
+	<div class="miContainerBody">
+		<mi-freezer-product 
+			ng-repeat="product in cntlr.container.positions" 
+			positions="{{cntlr.container.predefined.positions}}" 
+			product="{{product}}">
+		</mi-freezer-product>
+	</div>
+
+	<modal-dialog show='cntlr.modalShown' width='200px' height='200px'>
+		<p>Modal Content Goes here<p>
+	</modal-dialog>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-product.html">
+<div ng-class="{ miProduct100: cntlr.size['100'], miProduct81: cntlr.size['81'], 'col-sm-1': true }">
+	<div ng-class="{ miProductHead100: cntlr.size['100'], miProductHead81: cntlr.size['81'] }"> 
+		<div class="miLeft">
+			<div class="miSmall">
+				({{cntlr.product.dim1.pos}}, {{cntlr.product.dim2.pos}})
+			</div>
+		</div>
+		<div class="miRight">
+			<a ng-mouseenter="cntlr.mouseenter(cntlr.product)" ng-mouseleave="cntlr.mouseleave()" ng-click="cntlr.moveFrom();">
+				<span ng-show="cntlr.product.id != null && !cntlr.product.inQueue" class="glyphicon glyphicon-minus miActions">
+			</a>
+			<a ng-click="cntlr.moveTo();">
+				<span ng-show="cntlr.product.id == null" class="glyphicon glyphicon-plus miActions">
+			</a>
+			<a ng-click="cntlr.moveReturn();">
+				<span ng-show="cntlr.product.inQueue" class="glyphicon glyphicon-upload miActions">
+			</a>
+			<a ng-click="cntlr.menu({{product}})"><span class="glyphicon glyphicon-cog miActions"></a>
+		</div>
+		<div class="miSmall"> 
+			<a ng-click="cntlr.collapse({{cntlr.product.id}});">{{cntlr.product.name}}</a>
+		</div>
+	</div>
+	<div ng-hide="cntlr.zoomMode">
+		<div ng-class="{ miProductBody100: cntlr.size['100'], miProductBody81: cntlr.size['81'] }"> 
+		ID {{cntlr.product.id}}
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-modal.html">
+<div ng-show='cntlr.modalShown && cntlr.zoomMode'>
+	<div ng-style="cntlr.dialogStyle">
+		<div class="miModalHead">
+			({{cntlr.product.dim1.pos}}, {{cntlr.product.dim2.pos}}) {{cntlr.product.name}}
+		</div>
+		<div class="miModalBody">
+		</div>
+	</div>
+</div>
+</script>
+
+
+	<div class="form-group row">
+		<div class="col-sm-1"></div>
+	  	<div class="col-sm-2 miCaption">
+			<label for="worksheetName"> Name </label>
+		</div>
+	  	<div class="col-sm-3">
+			<input id="worksheetName" autoFocus 
+				   type="text" 
+				   class="form-control" 
+				   placeholder="Start by creating a unique name" 
+			       ng-disabled="false" 
+				   ng-model="cntlr.worksheet.name" 
+				   ng-blur="cntlr.create()">
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-1"></div>
+	  	<div class="col-sm-2">
+			<label for="worksheetVariableType"> Type </label>
+		</div>
+	  	<div class="col-sm-3">
+			<ol class="nya-bs-select" 
+				title="Select Variable Type" 
+				id="variableTypeSelect" 
+			    disabled="cntlr.worksheet.id === null" 
+				ng-model="cntlr.worksheet.variable_type"
+				ng-change="">
+				<li nya-bs-option="variableType in cntlr.variableTypes">
+					<a> {{variableType.name}} </a>
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-1"></div>
+	  	<div class="col-sm-2">
+			<label for="worksheetVersion"> Version </label>
+		</div>
+	  	<div class="col-sm-3">
+			<input id="worksheetVersion" 
+				   type="text" 
+				   class="form-control" 
+				   placeholder="Select worksheet above" 
+				   ng-disabled="false" 
+				   ng-model="cntlr.worksheet.version" 
+				   ng-change="cntlr.updater.version.change(cntlr.worksheet.version)">
+		</div>
+	</div>
+-->

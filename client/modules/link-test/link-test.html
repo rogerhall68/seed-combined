@@ -1,0 +1,16 @@
+<style type="text/css">
+</style>
+
+<mi-link-test-parent></mi-link-test-parent>
+
+<script type="text/ng-template" id="mi-link-test-parent.html">
+<div class="container">
+	<mi-link-test-child></mi-link-test-child>
+</script>
+
+<script type="text/ng-template" id="mi-link-test-child.html">
+<div>
+	<div ng-repeat="thing in cntlr.data.things"></div>
+</div>
+</script>
+

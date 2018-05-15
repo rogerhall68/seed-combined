@@ -1,0 +1,41 @@
+<style type="text/css">
+	.miLeft { height: 20px; padding: 0px; width: 70%; float: left; }
+	.miRight { height: 20px; padding: 0px; margin-left: 70%; text-align: right; vertical-align: top; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: center; }
+
+	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="form-group row">
+	<div class="col-sm-6">
+		<h1>View Edit</h1>
+	</div>
+	<div class="col-sm-6 row miHeadingRight">
+	</div>
+</div>
+<div class="container">
+	<form name="type">
+		<div class="form-group row">
+	    	<input type="checkbox" ng-model="cntlr.which"> Edit
+		</div>
+	</form>
+	{{cntlr.which}}
+	<mi-view-edit></mi-view-edit>
+</div>
+
+<script type="text/ng-template" id="mi-view-edit.html">
+<div class="col-sm-12">
+	<p>Text Here</p>
+	<ng-switch on="cntlr.which">
+		<div ng-switch-when="true">
+			<input type="text"ng-model="cntlr.value">
+		</div>
+		<div ng-switch-when="false">
+			{{ cntlr.value }}
+		</div>
+	</ng-switch>
+</div>
+</script>
+

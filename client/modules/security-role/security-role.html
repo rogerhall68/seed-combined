@@ -1,0 +1,167 @@
+<style role="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: middle; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 16px 6px 0px 0px; }
+	.miHeadingCenter { padding: 25px 0px 0px 0px; }
+
+	.miLeft { height: 20px; padding: 0px; width: 40%; float: left; border: #CCC solid 0px; }
+	.miRight { height: 20px; padding: 0px; margin-left: 40%; text-align: right; vertical-align: top; border: #CCC solid 0px; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: middle; }
+	.miSelected { background-color: #CCFF99; }
+
+	.miCaption { text-align: right; }
+
+  	.miModalHead { height: 22px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px; width: 100%; }
+  	.miModalBody { background-color: #FFF; font-size: 12px; font-weight: 100; padding: 4px; width: 100%; height: 110px; }
+
+  	.miCheckbox { height: 18px; width: 18px; }
+
+  	.miFontWeightNormal { font-weight: normal; }
+  	.miStatus { 
+  		font-weight: normal; 
+		display: inline-block;
+		
+		padding: 5px 10px;
+		font-size: 18px;
+		line-height: 1.5;
+		border-radius: 0px;
+		
+  		margin-bottom: 0;
+		text-align: right;
+		white-space: nowrap;
+		vertical-align: middle;
+		background-image: none;
+		border: 0px solid transparent;
+   	}
+  	.miStatusEdit { 
+  		color: #FFA500; 
+  	}
+  	.miStatusNew { 
+  		color: #337ab7; 
+  	}
+
+  	.miModule {
+  		height: 40px; 
+  		width: 600px; 
+  		padding: 2px; 
+  		text-align: left; 
+  		vertical-align: top; 
+  		border: #CCC solid 0px;
+  	}
+  	.miModule0 { padding-left: 0px; }
+  	.miModule1 { padding-left: 10px; }
+  	.miModule2 { padding-left: 20px; }
+  	.miModule3 { padding-left: 30px; }
+  	.miModule4 { padding-left: 40px; }
+  	.miModule5 { padding-left: 50px; }
+  	.miModule6 { padding-left: 60px; }
+
+	.miLabelDisabled { color: #999; }
+  	.miSelect { padding: 0px 0px 0px 15px; }
+
+  	.miSmall { font-size: 9px; font-weight: 100; padding: 0px 4px 0px 4px; }
+  	.miActions { font-size: 10px; font-weight: 100; padding: 0px; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-2">
+			<h1>Role</h1>
+		</div>
+		<div class="col-md-1 miHeadingRight">
+			<div ng-show="cntlr.status != ''" 
+				 ng-class="{ miStatus: true, 'miStatusNew': cntlr.status == 'New', 'miStatusEdit': cntlr.status == 'Editing' }">
+				{{cntlr.status}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="miHeadingCenter">
+				<ol class="nya-bs-select show-menu-arrow" 
+					title="Select existing or" 
+					id="chooser" 
+					ng-model="cntlr.role" 
+					ng-change="cntlr.chooser.change(cntlr.chooser.role)">	
+					<li nya-bs-option="r in cntlr.roles">
+						<a> {{r.role_name}} </a>
+					</li>
+				</ol>
+			</div>
+		</div>
+		<div class="col-md-2 miHeadingCenter">
+			<button class="btn btn-primary btn-sm" 
+					ng-click="cntlr.inactivate()" 
+					ng-show="!cntlr.role.canDelete && !cntlr.role.inactive && cntlr.role.id != null">Inactive</button>
+			<button class="btn btn-primary btn-sm" 
+					ng-click="cntlr.activate()" 
+					ng-show="cntlr.role.inactive && cntlr.role.id != null">Active</button>
+			<button class="btn btn-primary btn-sm" 
+					ng-click="cntlr.delete()" 
+					ng-show="cntlr.role.canDelete && cntlr.role.id != null">Delete</button>
+		</div>
+		<div class="col-md-2 miHeadingCenter">
+			<button class="btn btn-primary btn-sm" ng-click="cntlr.new()">Add Role</button>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-1"></div>
+	  	<div class="col-sm-2 miCaption">
+			<label for="roleName"> Name </label>
+		</div>
+	  	<div class="col-sm-3">
+			<input id="roleName" autoFocus 
+				   type="text" 
+				   class="form-control" 
+				   placeholder="Start by creating a unique name" 
+			       ng-disabled="false" 
+				   ng-model="cntlr.role.role_name" 
+				   ng-blur="cntlr.create()">
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-sm-1"></div>
+	  	<div class="col-sm-2 miCaption">
+			<label for="roleName"> Privileges </label>
+		</div>
+	  	<div class="col-sm-3">
+			<mi-module-privileges ng-repeat="module in cntlr.modules"></mi-module-privileges>
+		</div>
+	</div>
+</div>
+
+{{ cntlr.changes }}
+
+<script type="text/ng-template" id="mi-module-privileges.html">
+<div class="miModule row">
+	<div ng-class="{ 
+		'col-sm-5': true, 
+		'miModule0': module.uiLevel === 0, 
+		'miModule1': module.uiLevel === 1, 
+		'miModule2': module.uiLevel === 2, 
+		'miModule3': module.uiLevel === 3, 
+		'miModule4': module.uiLevel === 4, 
+		'miModule5': module.uiLevel === 5, 
+		'miModule6': module.uiLevel === 6 }">
+		{{ module.module_name}}
+	</div>
+	<div class="col-sm-2">
+		<div class="form-check" ng-click="cntlr.checked('view', module.module_id)" >
+			<input class="form-check-input" type="checkbox" ng-model="module.checked.view" ng-disabled="cntlr.role === null;" id="privView.{{module.module_id}}" ng-click="module.checkbox=true">
+			<label ng-class="{ 'form-check-label': true, 'miFontWeightNormal': true, 'miLabelDisabled': cntlr.role === null }" for="privView" ng-click="module.checkbox=false"> View </label>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<div class="form-check" ng-click="cntlr.checked('edit', module.module_id)">
+			<input class="form-check-input" type="checkbox" ng-model="module.checked.edit" ng-disabled="cntlr.role === null;" id="privEdit.{{module.module_id}}" ng-click="module.checkbox=true">
+			<label ng-class="{ 'form-check-label': true, 'miFontWeightNormal': true, 'miLabelDisabled': cntlr.role === null }" for="privEdit" ng-click="module.checkbox=false"> Edit </label>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<div class="form-check" ng-click="cntlr.checked('admin', module.module_id)">
+			<input class="form-check-input" type="checkbox" ng-model="module.checked.admin" ng-disabled="cntlr.role === null;" id="privAdmin.{{module.module_id}}" ng-click="module.checkbox=true">
+			<label ng-class="{ 'form-check-label': true, 'miFontWeightNormal': true, 'miLabelDisabled': cntlr.role === null }" for="privAdmin" ng-click="module.checkbox=false"> Admin </label>
+		</div>
+	</div>
+</div>
+</script>

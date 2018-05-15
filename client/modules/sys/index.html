@@ -1,0 +1,9 @@
+<h1>System Tables</h1>
+<div class="container">
+	<table class="table table-hover">
+		<tr ng-repeat="r in sys.data">
+			<td> <a href="#/sys/table/{{r.table_name}}">{{r.table_name}}</a></td>
+		</tr>
+	</table>
+</div>
+

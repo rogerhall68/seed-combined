@@ -1,0 +1,15 @@
+Installation
+
+1. Clone the project 
+
+2. In shell, change to the build directory
+
+3. Run "npm install".
+
+4. Run "npm install supervisor -g".
+
+5. To start the server/application, run "supervisor server.js".
+
+To check, open a browser and open URL:
+http://localhost:8080/api/
+

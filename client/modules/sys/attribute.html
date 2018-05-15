@@ -1,0 +1,84 @@
+<h1>System Attribute</h1>
+<div class="container">
+<form>
+  <div class="form-group row">
+    <label for="table_name" class="col-sm-2 form-control-label">Schema</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_name" readonly="readonly" ng-model="sys.rec.schema">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_name" class="col-sm-2 form-control-label">Table name</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_name" readonly="readonly" ng-model="sys.rec.table_name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_name" class="col-sm-2 form-control-label">Attribute name</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_name" readonly="readonly" ng-model="sys.rec.attrib_name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="attrib_label_singular" class="col-sm-2 form-control-label">Label singular</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="attrib_label_singular" placeholder="Label (singular form)" ng-model="sys.rec.attrib_label_singular" ng-change="sys.change('attrib_label_singular')" ng-blur="sys.blur('attrib_label_singular')">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="attrib_label_plural" class="col-sm-2 form-control-label">Label plural</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="attrib_label_plural" placeholder="Label (plural form)" ng-model="sys.rec.attrib_label_plural" ng-change="sys.change('attrib_label_plural')" ng-blur="sys.blur('attrib_label_plural')">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="attrib_desc" class="col-sm-2 form-control-label">Description</label>
+    <div class="col-sm-6">
+      <textarea class="form-control" id="attrib_desc" placeholder="Description" ng-model="sys.rec.attrib_desc" ng-change="sys.change('attrib_desc')" ng-blur="sys.blur('attrib_desc')"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="attrib_help_caption" class="col-sm-2 form-control-label">Help caption</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="attrib_help_caption" placeholder="Caption help" ng-model="sys.rec.attrib_help_caption" ng-change="sys.change('attrib_help_caption')" ng-blur="sys.blur('attrib_help_caption')">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="attrib_help_suggest" class="col-sm-2 form-control-label">Help suggest</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="attrib_help_suggest" placeholder="room name" ng-model="sys.rec.attrib_help_suggest" ng-change="sys.change('attrib_help_suggest')" ng-blur="sys.blur('attrib_help_suggest')">
+    </div>
+  </div>
+</form>
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      &nbsp;
+    </div>
+    <div class="col-sm-4">
+      <p><b>attrib_col_id</b>: {{sys.rec.attrib_col_id}} </p>
+      <p><b>attrib_db_string_type</b>: {{sys.rec.attrib_db_string_type}} </p>
+      <p><b>attrib_data_type</b>: {{sys.rec.attrib_data_type}}</p>
+      <p><b>attrib_max_length</b>: {{sys.rec.attrib_max_length}}</p>
+      <p><b>attrib_precision</b>: {{sys.rec.attrib_precision}}</p>
+      <p><b>attrib_scale</b>: {{sys.rec.attrib_scale}}</p>
+      <p><b>fk_table</b>: {{sys.rec.fk_table}}</p>
+      <p><b>fk_key</b>: {{sys.rec.fk_key}}</p>
+      <p><b>fk_name</b>: {{sys.rec.fk_name}}</p>
+    </div>
+    <div class="col-sm-4">
+      <p><b>is_primary_key</b>: {{sys.rec.is_primary_key}}</p>
+      <p><b>is_identity</b>: {{sys.rec.is_identity}}</p>
+      <p><b>is_nullable</b>: {{sys.rec.is_nullable}}</p>
+      <p><b>is_ansi_padded</b>: {{sys.rec.is_ansi_padded}}</p>
+      <p><b>is_computed</b>: {{sys.rec.is_computed}}</p>
+      <p><b>is_filestream</b>: {{sys.rec.is_filestream}}</p>
+      <p><b>is_xml_document</b>: {{sys.rec.is_xml_document}}</p>
+      <p><b>is_chron_var</b>: {{sys.rec.is_chron_var}}</p>
+    </div>
+  </div>
+</div>
+      
+    

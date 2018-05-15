@@ -1,0 +1,129 @@
+<style user="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: center; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 24px 0px 0px 0px; }
+	.miModalOverlay {  position:absolute; z-index:9999; top:0; left:0; width:100%; height:100%; background-color:#000000; opacity: 0.7; }
+	.miModalDialog { 
+		z-index:10000;
+		position: absolute;
+		width: 50%; 
+		top: 40%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		background-color: #fff;
+		box-shadow: 4px 4px 60px #000; }
+  	.miModalHead { height: 30px; font-weight: bold; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px 2px 2px 8px; width: 100%; }
+  	.miModalBody { background-color: #FFF; font-size: 12px; font-weight: 100; padding: 20px; width: 100%; }
+	.miLeft { width: 70%; float: left; }
+	.miRight { margin-left: 70%; text-align: right; vertical-align: top; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: center; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="form-group row">
+	<div class="col-sm-6">
+		<h1>User</h1>
+	</div>
+	<div class="col-sm-6 row miHeadingRight">
+		<ol class="nya-bs-select show-menu-arrow" id="chooser" ng-model="cntlr.chooser.user" ng-change="cntlr.chooser.change(cntlr.chooser.user)">	
+			<li nya-bs-option="r in cntlr.objects.users">
+				<a> {{r.user_first_name}} {{r.user_last_name}}</a>
+			</li>
+		</ol>
+		<button user="button" class="btn btn-primary" ng-click="cntlr.adder.new()">Add User</button>
+	</div>
+</div>
+
+<div class="container">
+	<form name="user">
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="firstName"> First name </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="firstName" 
+					   user="text" 
+					   class="form-control" 
+					   placeholder="Select user above" 
+					   ng-disabled="cntlr.updater.user_first_name.disable" 
+					   ng-model="cntlr.chooser.user.user_first_name" 
+					   ng-change="cntlr.updater.user_first_name.change(cntlr.chooser.user.user_first_name)">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="lastName"> Last name </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="lastName" 
+					   user="text" 
+					   class="form-control" 
+					   placeholder="Select user above" 
+					   ng-disabled="cntlr.updater.user_last_name.disable" 
+					   ng-model="cntlr.chooser.user.user_last_name" 
+					   ng-change="cntlr.updater.user_last_name.change(cntlr.chooser.user.user_last_name)">
+			</div>
+		</div>
+	</form>
+{{cntlr.objects.labs}}
+<!--
+-->
+	<new-security-user show='cntlr.adder.show' width='200px' height='200px'>
+		<p>Modal Content Goes here<p>
+	</new-security-user>
+</div>
+
+<!--
+<script id="mi-new-security-user.html" type="text/ng-template">
+<div>
+	NEW
+</div>
+</script>
+-->
+<script type="text/ng-template" id="mi-new-security-user.html">
+<div ng-show="cntlr.adder.show">
+	<div class="miModalOverlay" ng-click="cntlr.adder.off()"></div>
+	<div class="miModalDialog">
+		<div class="miModalHead">
+			Add user 
+		</div>
+		<div class="miModalBody">
+
+			<form name="user">
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="userName"> Name </label>
+					</div>
+				  	<div class="col-sm-4">
+						<input id="userName" 
+							   user="text" 
+							   class="form-control" 
+							   placeholder="Select user above" 
+							   ng-disabled="cntlr.updater.user_name.disable" 
+							   ng-model="cntlr.chooser.user.user_name" 
+							   ng-change="cntlr.updater.user_name.change(cntlr.chooser.user.user_name)">
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label class="sr-only"> Cancel and Submit buttons </label>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" 
+								class="btn btn-outline-primary" 
+								ng-click="cntlr.adder.off()">Cancel</button>
+						<button type="button" 
+								class="btn btn-primary" 
+								ng-disabled="cntlr.adder.submit.disable" 
+								ng-click="cntlr.adder.submit.commit()">Submit</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+</script>

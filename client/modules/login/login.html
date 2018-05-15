@@ -1,0 +1,51 @@
+<style type="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: center; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 24px 0px 0px 0px; }
+	.miLeft { width: 70%; float: left; }
+	.miRight { margin-left: 70%; text-align: right; vertical-align: top; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: center; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="form-group row">
+	<div class="col-sm-6">
+		<h1>Login</h1>
+	</div>
+	<div class="col-sm-6 row miHeadingRight">
+	</div>
+</div>
+
+<div class="container">
+	<form name="login">
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="name"> Username </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="name" 
+					   class="form-control" 
+					   placeholder="Username" 
+					   ng-disabled="cntlr.disable" 
+					   ng-model="cntlr.name" 
+					   ng-change="">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="password"> Password </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="password" 
+					   type="password" 
+					   class="form-control" 
+					   placeholder="Password" 
+					   ng-disabled="cntlr.disable" 
+					   ng-model="cntlr.password" 
+					   ng-keypress="cntlr.enter($event)" 
+					   ng-change="">
+			</div>
+		</div>
+	</form>
+</div>

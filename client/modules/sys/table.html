@@ -1,0 +1,43 @@
+<h1>System Table</h1>
+<div class="container">
+<form name="sysTable" id="sysTable">
+  <div class="form-group row">
+    <label for="table_name" class="col-sm-2 form-control-label">Schema</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_name" readonly="readonly" ng-model="sys.data[0].schema">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_name" class="col-sm-2 form-control-label">Table name</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_name" readonly="readonly" ng-model="sys.data[0].table_name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_label_singular" class="col-sm-2 form-control-label">Label singular</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_label_singular" placeholder="Label (singular form)" ng-model="sys.data[0].table_label_singular" ng-change="sys.change('table_label_singular')" ng-blur="sys.blur('table_label_singular')" auto-focus>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_label_plural" class="col-sm-2 form-control-label">Label plural</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="table_label_plural" placeholder="Label (plural form)" ng-model="sys.data[0].table_label_plural" ng-change="sys.change('table_label_plural')" ng-blur="sys.blur('table_label_plural')">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_desc" class="col-sm-2 form-control-label">Description</label>
+    <div class="col-sm-6">
+      <textarea class="form-control" id="table_desc" placeholder="Description" ng-model="sys.data[0].table_desc" ng-change="sys.change('table_desc')" ng-blur="sys.blur('table_desc')"></textarea>
+    </div>
+  </div>
+</div>
+<h2>Attributes</h2>
+<div class="container">
+  <table class="table table-hover">
+    <tr ng-repeat="r in sys.data">
+      <td> <a href="#/sys/table/{{r.table_name}}/attrib/{{r.attrib_name}}">{{r.attrib_name}}</a></td>
+    </tr>
+  </table>
+</div>
+

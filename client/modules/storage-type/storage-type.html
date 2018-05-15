@@ -1,0 +1,143 @@
+<style type="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: center; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 24px 0px 0px 0px; }
+	.miModalOverlay {  position:absolute; z-index:9999; top:0; left:0; width:100%; height:100%; background-color:#000000; opacity: 0.7; }
+	.miModalDialog { 
+		z-index:10000;
+		position: absolute;
+		width: 50%; 
+		top: 25%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		background-color: #fff;
+		box-shadow: 4px 4px 60px #000; }
+  	.miModalHead { height: 30px; font-weight: bold; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px 2px 2px 8px; width: 100%; }
+  	.miModalBody { background-color: #FFF; font-size: 12px; font-weight: 100; padding: 8px; width: 100%; }
+	.miLeft { width: 70%; float: left; }
+	.miRight { margin-left: 70%; text-align: right; vertical-align: top; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: center; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="form-group row">
+	<div class="col-sm-6">
+		<h1>Storage Type</h1>
+	</div>
+	<div class="col-sm-6 row miHeadingRight">
+		<ol class="nya-bs-select show-menu-arrow" id="chooser" ng-model="cntlr.chooser.type" ng-change="cntlr.chooser.change(cntlr.chooser.type)">	
+			<li nya-bs-option="r in cntlr.objects.types">
+				<a> {{r.store_type_name}} </a>
+			</li>
+		</ol>
+		<button type="button" class="btn btn-primary" ng-click="cntlr.adder.new()">Add Type</button>
+	</div>
+</div>
+
+<div class="container">
+	<form name="type">
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="typeName"> Type </label>
+			</div>
+		  	<div class="col-sm-2">
+				<input id="typeName" 
+					   type="text" 
+					   class="form-control" 
+					   placeholder="Select type above" 
+					   ng-disabled="cntlr.updater.store_type.disable" 
+					   ng-model="cntlr.chooser.type.store_type_name" 
+					   ng-change="cntlr.updater.store_type_name.change(cntlr.chooser.type.store_type_name)">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="typeCategory"> Category </label>
+			</div>
+		  	<div class="col-sm-6">
+				<ol id="typeCategory" 
+					class="nya-bs-select show-menu-arrow" 
+					disabled="cntlr.updater.store_type.disable" 
+					ng-model="cntlr.updater.category" 
+					ng-change="cntlr.updater.store_type_cat_id.change(cntlr.updater.category)">
+					<li nya-bs-option="r in cntlr.objects.categories">
+						<a> {{r.store_type_cat_name}} </a>
+					</li>
+				</ol>
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label class="sr-only"> Delete button </label>
+			</div>
+			<div class="col-sm-4">
+				<button type="button" 
+						class="btn btn-primary" 
+						ng-disabled="cntlr.updater.delete.disable" 
+						ng-click="cntlr.updater.delete.commit()">Delete</button>
+			</div>
+		</div>
+	</form>
+	<new-storage-type show='cntlr.adder.show' width='200px' height='200px'>
+		<p>Modal Content Goes here<p>
+	</new-storage-type>
+</div>
+
+<script type="text/ng-template" id="mi-new-storage-type.html">
+<div ng-show='cntlr.adder.show'>
+	<div class='miModalOverlay' ng-click='cntlr.adder.off()'></div>
+	<div class='miModalDialog'>
+		<div class="miModalHead">
+			Add storage type 
+		</div>
+		<div class="miModalBody">
+			<form name="type">
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="typeSelect"> Type </label>
+					</div>
+				  	<div class="col-sm-3">
+						<input id="typeName" 
+							   type="text" 
+							   class="form-control"  
+							   ng-model="cntlr.adder.type.store_type_name"
+							   ng-change="cntlr.adder.store_type_name.change(cntlr.adder.type)">
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="typeCatSelect"> Category </label>
+					</div>
+				  	<div class="col-sm-6">
+						<ol id="typeCategory" 
+							class="nya-bs-select show-menu-arrow" 
+							ng-change="cntlr.adder.store_type_cat_id.change()" 
+							ng-model="cntlr.adder.store_type_cat_id.select">
+							<li nya-bs-option="r in cntlr.objects.categories">
+								<a> {{r.store_type_cat_name}} </a>
+							</li>
+						</ol>
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label class="sr-only"> Cancel and Submit buttons </label>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" 
+								class="btn btn-outline-primary" 
+								ng-click="cntlr.adder.off()">Cancel</button>
+						<button type="button" 
+								class="btn btn-primary" 
+								ng-disabled="cntlr.adder.submit.disable" 
+								ng-click="cntlr.adder.submit.commit()">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</script>

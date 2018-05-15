@@ -1,0 +1,419 @@
+<style config="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: center; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 24px 0px 0px 0px; }
+	.miModalOverlay {  position:absolute; z-index:9999; top:0; left:0; width:100%; height:100%; background-color:#000000; opacity: 0.7; }
+	.miModalDialog { 
+		z-index:10000;
+		position: absolute;
+		width: 50%; 
+		top: 40%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		background-color: #fff;
+		box-shadow: 4px 4px 60px #000; }
+  	.miModalHead { height: 30px; font-weight: bold; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px 2px 2px 8px; width: 100%; }
+  	.miModalBody { background-color: #FFF; font-size: 12px; font-weight: 100; padding: 20px; width: 100%; }
+	.miLeft { width: 70%; float: left; }
+	.miRight { margin-left: 70%; text-align: right; vertical-align: top; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: center; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+</style>
+
+<div class="form-group row">
+	<div class="col-sm-6">
+		<h1>Storage Configuration</h1>
+	</div>
+	<div class="col-sm-6 row miHeadingRight">
+		<ol class="nya-bs-select show-menu-arrow" id="chooser" ng-model="cntlr.chooser.config" ng-change="cntlr.chooser.change(cntlr.chooser.config)">	
+			<li nya-bs-option="r in cntlr.objects.configs">
+				<a> {{r.store_config_name}} </a>
+			</li>
+		</ol>
+		<button config="button" class="btn btn-primary" ng-disabled="cntlr.chooser.copy.disable" ng-click="cntlr.adder.copy()">Copy</button>
+		<button config="button" class="btn btn-primary" ng-click="cntlr.adder.new()">New</button>
+	</div>
+</div>
+
+<div class="container">
+	<form name="config">
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configName"> Name </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="configName" 
+					   config="text" 
+					   class="form-control" 
+					   placeholder="Select config above" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.store_config_name" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configDesc"> Description </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="configDesc" 
+					   config="text" 
+					   class="form-control" 
+					   placeholder="Select config above" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.store_config_desc" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configBrand"> Brand </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="configBrand" 
+					   config="text" 
+					   class="form-control" 
+					   placeholder="Select config above" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.store_config_brand" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configModel"> Model </label>
+			</div>
+		  	<div class="col-sm-4">
+				<input id="configModel" 
+					   config="text" 
+					   class="form-control" 
+					   placeholder="Select config above" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.store_config_model" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		</div>
+
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configDim1Dir"> Dimension 1 </label>
+			</div>
+		  	<div class="col-sm-1">
+				<input id="configDim1" 
+					   config="text" 
+					   class="form-control" 
+					   placeholder="#" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.store_config_dim_1" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		  	<div class="col-sm-3">
+				<ol id="configDim1Dir" 
+					class="nya-bs-select show-menu-arrow" 
+					disabled="cntlr.updater.store_config.disable" 
+					ng-model="cntlr.updater.dim1Dir" 
+					ng-change="cntlr.updater.store_config_cat_id.change(cntlr.updater.category)">
+					<li nya-bs-option="r in cntlr.objects.dirs">
+						<a> {{r.store_dim_dir_name}} </a>
+					</li>
+				</ol>
+			</div>
+		  	<div class="col-sm-3">
+				<ol id="configDim1Lab" 
+					class="nya-bs-select show-menu-arrow" 
+					disabled="cntlr.updater.store_config.disable" 
+					ng-model="cntlr.updater.dim1Lab" 
+					ng-change="cntlr.updater.store_config_cat_id.change(cntlr.updater.category)">
+					<li nya-bs-option="r in cntlr.objects.labs">
+						<a> {{r.store_dim_label_name}} </a>
+					</li>
+				</ol>
+			</div>
+		</div>
+
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configDim2Dir"> Dimension 2 </label>
+			</div>
+		  	<div class="col-sm-1">
+				<input id="configDim2" 
+					   config="text" 
+					   class="form-control" 
+					   placeholder="#" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.store_config_dim_2" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		  	<div class="col-sm-3">
+				<ol id="configDim2Dir" 
+					class="nya-bs-select show-menu-arrow" 
+					disabled="cntlr.updater.store_config.disable" 
+					ng-model="cntlr.updater.dim2Dir" 
+					ng-change="cntlr.updater.store_config_cat_id.change(cntlr.updater.category)">
+					<li nya-bs-option="r in cntlr.objects.dirs">
+						<a> {{r.store_dim_dir_name}} </a>
+					</li>
+				</ol>
+			</div>
+		  	<div class="col-sm-3">
+				<ol id="configDim2Lab" 
+					class="nya-bs-select show-menu-arrow" 
+					disabled="cntlr.updater.store_config.disable" 
+					ng-model="cntlr.updater.dim2Lab" 
+					ng-change="cntlr.updater.store_config_cat_id.change(cntlr.updater.category)">
+					<li nya-bs-option="r in cntlr.objects.labs">
+						<a> {{r.store_dim_label_name}} </a>
+					</li>
+				</ol>
+			</div>
+		</div>
+
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label for="configPredefined"> Predefined positions </label>
+			</div>
+		  	<div class="col-sm-1">
+				<input id="configPredefined" 
+					   type="checkbox" 
+					   ng-disabled="cntlr.updater.store_config.disable" 
+					   ng-model="cntlr.chooser.config.has_predefined_positions" 
+					   ng-change="cntlr.updater.store_config_name.change(cntlr.chooser.config.store_config_name)">
+			</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="col-sm-2">
+				<label class="sr-only"> Delete button </label>
+			</div>
+			<div class="col-sm-4">
+				<button type="button" 
+						class="btn btn-primary" 
+						ng-disabled="cntlr.updater.delete.disable" 
+						ng-click="cntlr.updater.delete.commit()">Delete</button>
+			</div>
+		</div>
+
+	</form>
+
+	<div class="form-group row">
+		<div class="col-sm-6">
+			<h2>Allowed children</h2>
+		</div>
+	</div>
+	<div class="form-group row" ng-repeat="r in cntlr.objects.childs">
+		<div class="col-sm-3">
+			<!--a href=""><span class="glyphicon glyphicon-remove"></span></a-->
+			{{r.store_config_name}}
+		</div>
+		<button type="button" 
+				class="col-sm-1 btn btn-primary btn-xs" 
+				ng-disabled="r.is_unused == 0 ? true : false"
+				ng-click="cntlr.children.delete();">Remove</button>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-sm-3">
+			<ol class="nya-bs-select show-menu-arrow" id="child" ng-model="cntlr.allowed.config" ng-change="cntlr.allowed.change(cntlr.allowed.config)">	
+				<li nya-bs-option="r in cntlr.objects.allowed">
+					<a> {{r.store_config_name}} </a>
+				</li>
+			</ol>
+		</div>
+		<button type="button" 
+				class="col-sm-1 btn btn-primary btn-xs" 
+				ng-disabled="cntlr.allowed.disable" 
+				ng-click="cntlr.allowed.add()">Add</button>
+	</div>
+
+	<!--div class="form-group row" class="col-sm-6">
+		<a href=""><span class="glyphicon glyphicon-plus"></span></a>
+	</div-->
+<!--
+-->
+	<new-storage-config show='cntlr.adder.show' width='200px' height='200px'>
+		<p>Modal Content Goes here<p>
+	</new-storage-config>
+</div>
+
+<!--
+<script id="mi-new-storage-config.html" type="text/ng-template">
+<div>
+	NEW
+</div>
+</script>
+-->
+<script type="text/ng-template" id="mi-new-storage-config.html">
+<div ng-show="cntlr.adder.show">
+	<div class="miModalOverlay" ng-click="cntlr.adder.off()"></div>
+	<div class="miModalDialog">
+		<div class="miModalHead">
+			Add storage config 
+		</div>
+		<div class="miModalBody">
+
+			<form name="config">
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configName"> Name </label>
+					</div>
+				  	<div class="col-sm-6">
+						<input id="configName" 
+							   config="text" 
+							   class="form-control" 
+							   placeholder="Configuration name" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.store_config_name" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configDesc"> Description </label>
+					</div>
+				  	<div class="col-sm-6">
+						<input id="configDesc" 
+							   config="text" 
+							   class="form-control" 
+							   placeholder="Common description of the device" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.store_config_desc" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configBrand"> Brand </label>
+					</div>
+				  	<div class="col-sm-6">
+						<input id="configBrand" 
+							   config="text" 
+							   class="form-control" 
+							   placeholder="Brand or manufacturer" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.store_config_brand" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configModel"> Model </label>
+					</div>
+				  	<div class="col-sm-6">
+						<input id="configModel" 
+							   config="text" 
+							   class="form-control" 
+							   placeholder="Model number" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.store_config_model" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				</div>
+
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configDim1Dir"> Dimension 1 </label>
+					</div>
+				  	<div class="col-sm-2">
+						<input id="configDim1" 
+							   config="text" 
+							   class="form-control" 
+							   placeholder="#" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.store_config_dim_1" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				  	<div class="col-sm-3">
+						<ol id="configDim1Dir" 
+							class="nya-bs-select show-menu-arrow" 
+							disabled="cntlr.adder.store_config_cat_id.disable" 
+							ng-model="cntlr.adder.dim1Dir" 
+							ng-change="cntlr.adder.store_config_cat_id.change(cntlr.adder.category)">
+							<li nya-bs-option="r in cntlr.objects.dirs">
+								<a> {{r.store_dim_dir_name}} </a>
+							</li>
+						</ol>
+					</div>
+				  	<div class="col-sm-3">
+						<ol id="configDim1Lab" 
+							class="nya-bs-select show-menu-arrow" 
+							disabled="cntlr.adder.store_config_cat_id.disable" 
+							ng-model="cntlr.adder.dim1Lab" 
+							ng-change="cntlr.adder.store_config_cat_id.change(cntlr.adder.category)">
+							<li nya-bs-option="r in cntlr.objects.labs">
+								<a> {{r.store_dim_label_name}} </a>
+							</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configDim2Dir"> Dimension 2 </label>
+					</div>
+				  	<div class="col-sm-2">
+						<input id="configDim2" 
+							   config="text" 
+							   class="form-control" 
+							   placeholder="#" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.store_config_dim_2" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				  	<div class="col-sm-3">
+						<ol id="configDim2Dir" 
+							class="nya-bs-select show-menu-arrow" 
+							disabled="cntlr.adder.store_config_cat_id.disable" 
+							ng-model="cntlr.adder.dim2Dir" 
+							ng-change="cntlr.adder.store_config_cat_id.change(cntlr.adder.category)">
+							<li nya-bs-option="r in cntlr.objects.dirs">
+								<a> {{r.store_dim_dir_name}} </a>
+							</li>
+						</ol>
+					</div>
+				  	<div class="col-sm-3">
+						<ol id="configDim2Lab" 
+							class="nya-bs-select show-menu-arrow" 
+							disabled="cntlr.adder.store_config_cat_id.disable" 
+							ng-model="cntlr.adder.dim2Lab" 
+							ng-change="cntlr.adder.store_config_cat_id.change(cntlr.adder.category)">
+							<li nya-bs-option="r in cntlr.objects.labs">
+								<a> {{r.store_dim_label_name}} </a>
+							</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label for="configPredefined"> Predefined positions </label>
+					</div>
+				  	<div class="col-sm-1">
+						<input id="configPredefined" 
+							   type="checkbox" 
+							   ng-disabled="cntlr.adder.store_config.disable" 
+							   ng-model="cntlr.adder.config.has_predefined_positions" 
+							   ng-change="cntlr.adder.store_config_name.change(cntlr.adder.config.store_config_name)">
+					</div>
+				</div>
+				<div class="form-group row">
+				  	<div class="col-sm-2">
+						<label class="sr-only"> Cancel and Submit buttons </label>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" 
+								class="btn btn-outline-primary" 
+								ng-click="cntlr.adder.off()">Cancel</button>
+						<button type="button" 
+								class="btn btn-primary" 
+								ng-disabled="cntlr.adder.submit.disable" 
+								ng-click="cntlr.adder.submit.commit()">Submit</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+</script>

@@ -1,0 +1,18 @@
+{
+	"app": {
+		"name": "seed",
+		"version": "0.0.1",
+		"copyright": "Roger A Hall"
+	},
+	"server": {
+		"domain": "localhost",
+		"port": "8081",
+		"htmlRoot": "/../client"
+	},
+	"api": {
+		"name": "seed",
+		"path": "api",
+		"test": "src/modules/sys/*",
+		"modules": ["./api/ldap/ldap.js", "./api/security/security.js", "./api/sys/sys.js", "./api/widget/widget.js"]
+	}
+}

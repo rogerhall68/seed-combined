@@ -1,0 +1,247 @@
+<style type="text/css">
+	.miHeadingLeft { text-align: left; vertical-align: center; padding: 0px 0px 0px 0px; }
+	.miHeadingRight { text-align: right; vertical-align: top; padding: 24px 0px 0px 0px; }
+	.miHeadingCenter { padding: 25px 0px 0px 0px; }
+
+	.miLeft { height: 20px; padding: 0px; width: 40%; float: left; border: #CCC solid 0px; }
+	.miRight { height: 20px; padding: 0px; margin-left: 40%; text-align: right; vertical-align: top; border: #CCC solid 0px; }
+	.miCenter { height: 20px; padding: 0px; text-align: center; vertical-align: center; }
+	.miSelected { background-color: #CCFF99; }
+
+  	.miModalHead { height: 22px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px; width: 100%; }
+  	.miModalBody { background-color: #FFF; font-size: 12px; font-weight: 100; padding: 4px; width: 100%; height: 110px; }
+
+  	.miNavigation { padding: -1px 0px 0px 30px; border: #CCC solid 0px; }
+  	.miView { text-align: right; vertical-align: top; border: #CCC solid 0px; }
+  	.miSelect { padding: 0px 0px 0px 15px; }
+
+  	.miFreezer { font-size: 12px; font-weight: 100; border: #CCC solid 1px; border-radius: 4px; padding: 0px 4px 4px 4px; width: 220px; }
+  	.miComponent { border: #CCC solid 1px; border-radius: 4px; padding: 0px 0px 4px 0px; margin-top: 4px; width: 100%; }
+  	.miComponentHead { font-size: 9px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 4px; width: 100%; }
+  	.miComponentBody { padding: 0px 4px 0px 4px; width: 100%; }
+
+  	.miContainer { font-size: 9px; background-color: #F5F5F5; border: #CCC solid 1px; border-radius: 4px; margin-top: 4px; padding: 4px; width: 100%; }
+
+  	.miSmall { font-size: 9px; font-weight: 100; padding: 0px 4px 0px 4px; }
+  	.miActions { font-size: 10px; font-weight: 100; padding: 0px; }
+  	.miInfo { font-size: 9px; font-weight: 100; font-style: italic; padding: 0px 4px 0px 4px; }
+  	.miAccent { font-size: 18px; font-weight: 100; font-style: italic; }
+  	a:hover { text-decoration: none; color: #F60; }
+
+  	.miFreezerHead { background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 4px 0px 0px 0px; width: 100%; }
+  	.miFreezerBody { font-size: 12px; font-weight: 100; padding: 4px; width: 100%; }
+  	.miContainerHead { padding: 4px; width: 100%; text-align: left; }
+  	.miContainerBody { padding: 4px; width: 100%; }
+  	.miProductSmall { border: #CCC solid 1px; border-radius: 2px; padding: 0px; width: 20px;	font-size: 10px; }
+  	.miProductHeadSmall { height: 22px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 2px 2px 0px 2px; width: 100%; }
+  	.miProductBodySmall { padding: 2px; width: 100%; }
+  	.miProductBig { border: #CCC solid 1px; border-radius: 4px; padding: 0px; width: 80px;	 }
+  	.miProductHeadBig { height: 40px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 4px 4px 0px 4px; width: 100%; }
+  	.miProductBodyBig { padding: 4px; width: 100%; }
+
+  	.miProduct100 { border: #CCC solid 1px; border-radius: 4px; padding: 0px; width: 80px;	 }
+  	.miProductHead100 { height: 40px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 4px 4px 0px 4px; width: 100%; }
+  	.miProductBody100 { padding: 4px; width: 100%; }
+
+  	.miProduct81 { border: #CCC solid 1px; border-radius: 4px; padding: 0px; width: 90px; }
+  	.miProductHead81 { height: 49px; background-color: #F5F5F5; border-bottom: #CCC solid 1px; padding: 4px 4px 0px 4px; width: 100%; }
+  	.miProductBody81 { padding: 4px; width: 100%; }
+
+  	.miEditContainer { width: 80px; border: #CCC solid 1px; border-radius: 4px; }
+</style>
+
+
+
+<mi-freezer-browser></mi-freezer-browser>
+
+<script type="text/ng-template" id="mi-freezer-browser.html">
+<div class="container">
+	<!--div class="row" data-ng-init="cntlr.init()"-->
+	<div class="row">
+		<div class="col-md-3">
+			<h1>Freezer</h1>
+		</div>
+		<div class="col-md-3 miNavigation">
+			<mi-freezer-list></mi-freezer-list>
+		</div>
+		<div class="col-md-3 miView">
+			<mi-freezer-favorites></mi-freezer-favorites>
+		</div>
+		<!--div class="col-md-3 miHeadingRight">
+			<a ng-click="cntlr.admin()">Admin</a>
+		</div-->
+	</div>
+	<div class="row">
+		<div class="col-md-3 miNavigation">
+			<mi-freezer-navigation class="miNavigation" ng-model="cntlr.freezer"></mi-freezer-navigation>
+		</div>
+		<div class="col-md-9 miView">
+			<mi-container-display class="miView" ng-model="cntlr.container"></mi-container-display>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-navigation.html">
+<div>
+	<div ng-mousemove="cntlr.mousemove($event)" class="miFreezer row">
+		<mi-freezer-component ng-repeat="component in cntlr.freezer.components"></mi-freezer-component>
+		<mi-freezer-container ng-repeat="container in cntlr.freezer.containers"></mi-freezer-container>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-list.html">
+<div class="miHeadingCenter">
+	<ol class="nya-bs-select" 
+		title="Select freezer" 
+		id="freezerSelect" 
+		ng-model="cntlr.freezer"
+
+		ng-change="cntlr.selectFreezer(cntlr.freezer.store_item_id)">
+		<li nya-bs-option="r in cntlr.freezers">
+			<a> {{r.store_item_name}} </a>
+		</li>
+	</ol>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-favorites.html">
+<div class="miHeadingCenter">
+	<ol class="nya-bs-select show-menu-arrow" 
+		title="Recent containers" 
+		id="containerSelect" 
+		ng-model="cntlr.chooser.container" 
+		ng-change="cntlr.chooser.change(cntlr.chooser.config)">	
+		<li nya-bs-option="r in cntlr.objects.configs">
+			<a> {{r.store_config_name}} </a>
+		</li>
+	</ol>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-component.html">
+<div class="miComponent">
+	<div class="miComponentHead" ng-click="cntlr.collapse('truth{{component.id}}');">
+		<div class="miLeft"> {{component.name}} </div>
+		<div class="miInfo miRight">
+			<!--a ng-click="cntlr.addHere({{component.id}}); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></a-->
+		</div>
+	</div>
+	<div class="miComponentBody" ng-show="cntlr.freezer.collapse.index.truth{{component.id}}">
+		<mi-freezer-component-2 ng-repeat="component in component.components"></mi-freezer-component-2>
+		<mi-freezer-container ng-repeat="container in component.containers"></mi-freezer-container>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-component-2.html">
+<div class="miComponent">
+	<div class="miComponentHead">
+		<!--div class="miLeft"> {{component.name}} </div-->
+		<div class="miLeft" ng-click="cntlr.edit('truth{{component.id}}');">
+			<ng-switch on="cntlr.editIndex.truth{{component.id}}">
+				<div ng-switch-when="true">	
+					<input class="miEditContainer" type="text" ng-model="component.name" auto-focus> 
+				</div>
+				<div ng-switch-when="false"> {{component.name}} </div>
+				<div ng-switch-default> {{component.name}} </div>
+			</ng-switch>
+		</div>
+		<div class="miInfo miRight" ng-click="cntlr.collapse('truth{{component.id}}');">
+			<!--a ng-click="cntlr.addHere({{component.id}}); $event.stopPropagation();"><span class="glyphicon glyphicon-plus"></a-->
+		</div>
+	</div>
+	<div ng-show="cntlr.freezer.collapse.index.truth{{component.id}}">
+		<div class="miComponentBody">
+			<mi-freezer-container ng-repeat="container in component.containers"></mi-freezer-container>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-container.html">
+<div ng-class="{ 'miContainer': true }">
+	<div ng-class="{ miLeft: true, 'miSelected': cntlr.selectIndex.truth{{container.id}} }" ng-click="cntlr.edit('truth{{container.id}}');">
+		<ng-switch on="cntlr.editIndex.truth{{container.id}}">
+			<div ng-switch-when="true">	
+				<input class="miEditContainer" type="text" ng-model="container.name" auto-focus> 
+			</div>
+			<div ng-switch-when="false"> {{container.name}} </div>
+			<div ng-switch-default> {{container.name}} </div>
+		</ng-switch>
+	</div>
+	<div ng-class="{ miInfo: true, 'miRight': true, 'miSelected': cntlr.selectIndex.truth{{container.id}} }"
+		 ng-click="cntlr.selectContainer('{{container.id}}');">
+		<!--a ng-click="cntlr.moveThis({{container.posId}});"><span class="glyphicon glyphicon-minus"></a-->
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-container-display.html">
+<div ng-mousemove="cntlr.mousemove($event)">
+	<div class="miContainerBody">
+		<mi-freezer-product 
+			ng-repeat="product in cntlr.container.positions" 
+			positions="{{cntlr.container.predefined.positions}}" 
+			product="{{product}}">
+		</mi-freezer-product>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-product.html">
+<div ng-class="{ miProduct100: cntlr.size['100'], miProduct81: cntlr.size['81'], 'col-sm-1': true }">
+	<div ng-class="{ miProductHead100: cntlr.size['100'], miProductHead81: cntlr.size['81'] }"> 
+		<div class="miLeft">
+			<div class="miSmall">
+				({{cntlr.product.dim1.pos}}, {{cntlr.product.dim2.pos}})
+			</div>
+		</div>
+		<div class="miRight">
+			<a ng-click="cntlr.moveFrom();">
+				<!--span ng-show="cntlr.miMove.miMinus{{cntlr.product.posId}}" class="glyphicon glyphicon-minus"-->
+				<!--span ng-show="miMove.miMinus{{cntlr.product.posId}}" class="glyphicon glyphicon-minus"-->
+				<span ng-show="cntlr.product.id != null && !cntlr.product.inQueue" class="glyphicon glyphicon-minus miActions">
+			</a>
+			<a ng-click="cntlr.moveTo();">
+				<!--span ng-show="cntlr.miMove.miPlus{{cntlr.product.posId}}" class="glyphicon glyphicon-plus"-->
+				<!--span ng-show="miMove.miPlus{{cntlr.product.posId}}" class="glyphicon glyphicon-plus"-->
+				<span ng-show="cntlr.product.id == null" class="glyphicon glyphicon-plus miActions">
+			</a>
+			<a ng-click="cntlr.moveReturn();">
+				<!--span ng-show="cntlr.miMove.miUpload{{cntlr.product.posId}}" class="glyphicon glyphicon-upload"-->
+				<span ng-show="cntlr.product.inQueue" class="glyphicon glyphicon-upload miActions">
+			</a>
+			<!--a ng-mouseenter="cntlr.mouseenter(cntlr.product)" ng-mouseleave="cntlr.mouseleave()" ng-click="cntlr.menu()"><span class="glyphicon glyphicon-cog miActions"></a-->
+			<a ng-click="cntlr.menu()"><span class="glyphicon glyphicon-cog miActions"></a>
+		</div>
+		<div class="miSmall"> 
+			<a>{{cntlr.product.name}}</a>
+		</div>
+	</div>
+	<div ng-hide="cntlr.zoomMode">
+		<div ng-class="{ miProductBody100: cntlr.size['100'], miProductBody81: cntlr.size['81'] }"> 
+		ID {{cntlr.product.id}}
+		</div>
+	</div>
+
+	<modal-dialog show='cntlr.modalShown' width='200px' height='200px'>
+		<p>Modal Content Goes here<p>
+	</modal-dialog>
+</div>
+</script>
+
+<script type="text/ng-template" id="mi-freezer-modal.html">
+<div ng-show='cntlr.modalShown'>
+	<div ng-style="cntlr.dialogStyle">
+		<div class="miModalHead miSmall">
+			({{cntlr.product.dim1.pos}}, {{cntlr.product.dim2.pos}}) </ br> {{cntlr.product.name}}
+		</div>
+		<div class="miModalBody">
+			<a ng-click="cntlr.printLabel();">Reprint Label</a> </ br>
+		</div>
+	</div>
+</div>
+</script>
+
