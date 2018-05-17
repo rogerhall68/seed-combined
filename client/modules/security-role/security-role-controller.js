@@ -2,13 +2,37 @@
 'use strict';
 
 var Roles = function(SecurityRoleService, SecurityModuleService) {
-	console.log('Role Controller Called');
 	var cntlr = this;
+
 	cntlr.roles   = null;
 	cntlr.role    = null;
 	cntlr.modules = null;
 	cntlr.changes = [];
 	cntlr.status  = 'New';
+	cntlr.nullVariable = {"role_id": null, "role_active": null, "role_name": null,"canDelete": null};
+
+	function clone(obj) {
+	    if (null === obj || "object" != typeof obj) { return obj; }
+	    var copy = obj.constructor();
+	    for (var attr in obj) {
+	        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+	    }
+	    return copy;
+	}	
+
+	cntlr.inactivate = function() { cntlr.role.role_active = false; }
+	cntlr.activate   = function() { cntlr.role.role_active = true; }
+
+	cntlr.new = function() {
+		console.log('new');
+		cntlr.status = 'New'; 
+		cntlr.role = clone(cntlr.nullVariable);
+	};
+
+	cntlr.select = function() {
+		console.log('select');
+		cntlr.status = 'Editing'; 
+	};
 
 	function checkLeft(priv, module) {
 		console.log('checkLeft', priv, module);

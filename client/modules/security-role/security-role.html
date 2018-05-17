@@ -82,25 +82,25 @@
 					title="Select existing or" 
 					id="chooser" 
 					ng-model="cntlr.role" 
-					ng-change="cntlr.chooser.change(cntlr.chooser.role)">	
+					ng-change="cntlr.select()">	
 					<li nya-bs-option="r in cntlr.roles">
 						<a> {{r.role_name}} </a>
 					</li>
 				</ol>
 			</div>
 		</div>
-		<div class="col-md-2 miHeadingCenter">
+		<div class="col-md-1 miHeadingCenter">
 			<button class="btn btn-primary btn-sm" 
 					ng-click="cntlr.inactivate()" 
-					ng-show="!cntlr.role.canDelete && !cntlr.role.inactive && cntlr.role.id != null">Inactive</button>
+					ng-show="!cntlr.role.canDelete && cntlr.role.role_active && cntlr.role.role_id != null">Make Inactive</button>
 			<button class="btn btn-primary btn-sm" 
 					ng-click="cntlr.activate()" 
-					ng-show="cntlr.role.inactive && cntlr.role.id != null">Active</button>
+					ng-show="!cntlr.role.role_active && cntlr.role.role_id != null">Make Active</button>
 			<button class="btn btn-primary btn-sm" 
 					ng-click="cntlr.delete()" 
-					ng-show="cntlr.role.canDelete && cntlr.role.id != null">Delete</button>
+					ng-show="cntlr.role.canDelete && cntlr.role.role_id != null">Delete</button>
 		</div>
-		<div class="col-md-2 miHeadingCenter">
+		<div class="col-md-1 miHeadingCenter">
 			<button class="btn btn-primary btn-sm" ng-click="cntlr.new()">Add Role</button>
 		</div>
 	</div>
@@ -131,6 +131,7 @@
 </div>
 
 {{ cntlr.changes }}
+{{ cntlr.roles }}
 
 <script type="text/ng-template" id="mi-module-privileges.html">
 <div class="miModule row">

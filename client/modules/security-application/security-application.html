@@ -2,6 +2,7 @@
 	.miHeadingLeft { text-align: left; vertical-align: middle; padding: 0px 0px 0px 0px; }
 	.miHeadingRight { text-align: right; vertical-align: top; padding: 16px 6px 0px 0px; }
 	.miHeadingCenter { padding: 25px 0px 0px 0px; }
+	.miNewButtonDamit { text-align: left; vertical-align: middle; padding: 25px 0px 0px 0px; }
 
 	.miLeft { height: 20px; padding: 0px; width: 40%; float: left; border: #CCC solid 0px; }
 	.miRight { height: 20px; padding: 0px; margin-left: 40%; text-align: right; vertical-align: top; border: #CCC solid 0px; }
@@ -68,7 +69,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<h1>Group</h1>
+			<h1>Application</h1>
 		</div>
 		<div class="col-md-1 miHeadingRight">
 			<div ng-show="cntlr.status != ''" 
@@ -81,76 +82,57 @@
 				<ol class="nya-bs-select show-menu-arrow" 
 					title="Select existing or" 
 				    id="chooser" 
-				    ng-model="cntlr.chooser.group" 
-				    ng-change="cntlr.chooser.change(cntlr.chooser.group)">	
-					<li nya-bs-option="r in cntlr.objects.groups">
-						<a> {{r.group_name}} </a>
+				    ng-model="cntlr.application" 
+				    ng-change="cntlr.select()">	
+					<li nya-bs-option="r in cntlr.applications">
+						<a> {{r.app_name}} </a>
 					</li>
 				</ol>
 			</div>
 		</div>
-		<div class="col-md-2 miHeadingCenter">
+		<div class="col-md-1 miHeadingCenter">
 			<button class="btn btn-primary btn-sm" 
 					ng-click="cntlr.inactivate()" 
-					ng-show="!cntlr.role.canDelete && !cntlr.role.inactive && cntlr.role.id != null">Inactive</button>
+					ng-show="!cntlr.application.canDelete && cntlr.application.app_active && cntlr.application.app_id != null">Make Inactive</button>
 			<button class="btn btn-primary btn-sm" 
 					ng-click="cntlr.activate()" 
-					ng-show="cntlr.role.inactive && cntlr.role.id != null">Active</button>
+					ng-show="!cntlr.application.app_active && cntlr.application.app_id != null">Make Active</button>
 			<button class="btn btn-primary btn-sm" 
 					ng-click="cntlr.delete()" 
-					ng-show="cntlr.role.canDelete && cntlr.role.id != null">Delete</button>
+					ng-show="cntlr.application.canDelete && cntlr.application.app_id != null">Delete</button>
 		</div>
-		<div class="col-md-2 miHeadingCenter">
-			<button class="btn btn-primary btn-sm" ng-click="cntlr.new()">Add Group</button>
+		<div class="col-md-1 miHeadingCenter">
+			<button class="btn btn-primary btn-sm" ng-click="cntlr.new()">Add Application</button>
 		</div>
 	</div>
 	<div class="form-group row">
 		<div class="col-sm-1"></div>
 	  	<div class="col-sm-2 miCaption">
-			<label for="groupName"> Name </label>
+			<label for="applicationName"> Name </label>
 		</div>
 	  	<div class="col-sm-3">
-			<input id="groupName" autoFocus 
+			<input id="applicationName" autoFocus 
 				   type="text" 
 				   class="form-control" 
 				   placeholder="Start by creating a unique name" 
-				   ng-disabled="cntlr.updater.group_name.disable" 
-				   ng-model="cntlr.chooser.group.group_name" 
-				   ng-change="cntlr.updater.group_name.change(cntlr.chooser.group.group_name)">
+				   ng-disabled="false" 
+				   ng-model="cntlr.application.app_name" 
+				   ng-blur="cntlr.create()">
 		</div>
 	</div>
 	<div class="form-group row">
 		<div class="col-sm-1"></div>
 	  	<div class="col-sm-2 miCaption">
-			<label for="groupUsers"> Users </label>
+			<label for="applicationUsers"> Modules </label>
 		</div>
 	  	<div class="col-sm-3">
-			<ol id="groupUsers" 
+			<ol id="applicationUsers" 
 				class="nya-bs-select" 
-				ng-model="cntlr.chooser.group.group_users" 
+				ng-model="cntlr.module" 
 				data-selected-text-format="count" multiple>
-				<li nya-bs-option="option in cntlr.objects.users">
+				<li nya-bs-option="option in cntlr.modules">
 					<a>
-						{{option.name}}
-						<span class="glyphicon glyphicon-ok check-mark"></span>
-					</a>
-				</li>
-			</ol>
-		</div>
-	</div>
-	<div class="form-group row">
-		<div class="col-sm-1"></div>
-	  	<div class="col-sm-2 miCaption">
-			<label for="groupRoles"> Roles </label>
-		</div>
-	  	<div class="col-sm-3">
-			<ol id="groupUsers" 
-				class="nya-bs-select" 
-				ng-model="cntlr.chooser.group.group_roles" 
-				data-selected-text-format="count" multiple>
-				<li nya-bs-option="option in cntlr.objects.roles">
-					<a>
-						{{option.name}}
+						{{option.module_name}}
 						<span class="glyphicon glyphicon-ok check-mark"></span>
 					</a>
 				</li>
@@ -158,46 +140,50 @@
 		</div>
 	</div>
 
-	{{cntlr.chooser.group.group_users}}
+	{{ cntlr.applications }}
 	<br>
-	{{cntlr.chooser.group.group_roles}}
+	{{ cntlr.modules }}
+	<br>
+	{{cntlr.chooser.application.application_users}}
+	<br>
+	{{cntlr.chooser.application.application_roles}}
 	
 <!--
 -->
-	<new-security-group show='cntlr.adder.show' width='200px' height='200px'>
+	<new-security-application show='cntlr.adder.show' width='200px' height='200px'>
 		<p>Modal Content Goes here<p>
-	</new-security-group>
+	</new-security-application>
 </div>
 
 <!--
-<script id="mi-new-security-group.html" type="text/ng-template">
+<script id="mi-new-security-application.html" type="text/ng-template">
 <div>
 	NEW
 </div>
 </script>
 -->
-<script type="text/ng-template" id="mi-new-security-group.html">
+<script type="text/ng-template" id="mi-new-security-application.html">
 <div ng-show="cntlr.adder.show">
 	<div class="miModalOverlay" ng-click="cntlr.adder.off()"></div>
 	<div class="miModalDialog">
 		<div class="miModalHead">
-			Add security group 
+			Add security application 
 		</div>
 		<div class="miModalBody">
 
-			<form name="group">
+			<form name="application">
 				<div class="form-group row">
 				  	<div class="col-sm-2">
-						<label for="groupName"> Name </label>
+						<label for="applicationName"> Name </label>
 					</div>
 				  	<div class="col-sm-4">
-						<input id="groupName" 
-							   group="text" 
+						<input id="applicationName" 
+							   application="text" 
 							   class="form-control" 
-							   placeholder="Select group above" 
-							   ng-disabled="cntlr.updater.group_name.disable" 
-							   ng-model="cntlr.chooser.group.group_name" 
-							   ng-change="cntlr.updater.group_name.change(cntlr.chooser.group.group_name)">
+							   placeholder="Select application above" 
+							   ng-disabled="cntlr.updater.application_name.disable" 
+							   ng-model="cntlr.chooser.application.application_name" 
+							   ng-change="cntlr.updater.application_name.change(cntlr.chooser.application.application_name)">
 					</div>
 				</div>
 				<div class="form-group row">

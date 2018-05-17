@@ -19,23 +19,31 @@
 	};
 
 	var getGroups = {
-		"q": "SELECT [group_id],[group_name],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_GROUP]"
+		"q": "SELECT [group_id],[group_name] FROM [dbo].[SECURITY_GROUP]"
+	};
+
+	var getApplications = {
+		"q": "SELECT [app_id],[app_active],[app_name],[system_id] FROM [dbo].[SECURITY_APPLICATION]"
+	};
+
+	var getApplicationModules = {
+		"q": "SELECT mod.[module_id],mod.[module_active],mod.[module_name],mod.[parent_module_id] FROM [dbo].[SECURITY_MODULE] as mod JOIN [dbo].[SECURITY_APPLICATION_MODULE] as appmod ON mod.[module_id] = appmod.[module_id]"
 	};
 
 	var getModules = {
-		"q": "SELECT [module_id],[module_active],[module_name],[parent_module_id],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_MODULE]"
+		"q": "SELECT [module_id],[module_active],[module_name],[parent_module_id] FROM [dbo].[SECURITY_MODULE]"
 	};
 
 	var getRoles = {
-		"q": "SELECT [role_id],[role_name],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_ROLE]"
+		"q": "SELECT [role_id],[role_active],[role_name] FROM [dbo].[SECURITY_ROLE]"
 	};
 
 	var getUserTyes = {
-		"q": "SELECT [user_login_type_id],[user_login_type_name],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_USER_LOGIN_TYPE]"
+		"q": "SELECT [user_login_type_id],[user_login_type_name] FROM [dbo].[SECURITY_USER_LOGIN_TYPE]"
 	};
 
 	var getDepartments = {
-		"q": "SELECT [dept_id],[dept_name],[organization_id],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[DEPARTMENT]"
+		"q": "SELECT [dept_id],[dept_name],[organization_id] FROM [dbo].[DEPARTMENT]"
 	};
 
 	var getLaboratorys = {
@@ -43,35 +51,37 @@
 	};
 
 	var getPrivileges = {
-		"q": "SELECT [priv_id],[priv_name],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_PRIVILEGE]"
+		"q": "SELECT [priv_id],[priv_name] FROM [dbo].[SECURITY_PRIVILEGE]"
 	};
 
 	var getUserGroup = {
-		"q": "SELECT [store_config_id],[store_type_id],[store_config_name],[store_config_desc],[store_config_brand],[store_config_model],[store_config_dim_1],[store_config_dim_1_label_id],[store_config_dim_1_dir_id],[store_config_dim_2],[store_config_dim_2_label_id],[store_config_dim_2_dir_id],[has_predefined_positions],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[STORAGE_CONFIG] WHERE [store_config_id] = @store_config_id",
+		"q": "SELECT [store_config_id],[store_type_id],[store_config_name],[store_config_desc],[store_config_brand],[store_config_model],[store_config_dim_1],[store_config_dim_1_label_id],[store_config_dim_1_dir_id],[store_config_dim_2],[store_config_dim_2_label_id],[store_config_dim_2_dir_id],[has_predefined_positions] FROM [dbo].[STORAGE_CONFIG] WHERE [store_config_id] = @store_config_id",
 		"params": ["store_config_id"],
 		"data": function (req) { return [req.params.config_id]; }
 	};
 
 	var addGroup = {
-		"q": "SELECT [store_config_id],[store_type_id],[store_config_name],[store_config_desc],[store_config_brand],[store_config_model],[store_config_dim_1],[store_config_dim_1_label_id],[store_config_dim_1_dir_id],[store_config_dim_2],[store_config_dim_2_label_id],[store_config_dim_2_dir_id],[has_predefined_positions],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[STORAGE_CONFIG] WHERE [store_config_id] = @store_config_id",
+		"q": "SELECT [store_config_id],[store_type_id],[store_config_name],[store_config_desc],[store_config_brand],[store_config_model],[store_config_dim_1],[store_config_dim_1_label_id],[store_config_dim_1_dir_id],[store_config_dim_2],[store_config_dim_2_label_id],[store_config_dim_2_dir_id],[has_predefined_positions] FROM [dbo].[STORAGE_CONFIG] WHERE [store_config_id] = @store_config_id",
 		"params": ["store_config_id"],
 		"data": function (req) { return [req.params.config_id]; }
 	};
 
 
 // -- user group
-// SELECT [user_group_id],[user_id],[group_id],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_USER_GROUP];
+// SELECT [user_group_id],[user_id],[group_id] FROM [dbo].[SECURITY_USER_GROUP];
 // -- module group
-// SELECT [module_group_id],[module_group_name],[app_id],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_MODULE_GROUP];
+// SELECT [module_group_id],[module_group_name],[app_id] FROM [dbo].[SECURITY_MODULE_GROUP];
 // -- role module privilege
-// SELECT [role_module_priv_id],[role_id],[module_id],[priv_id],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_ROLE_MODULE_PRIVILEGE];
+// SELECT [role_module_priv_id],[role_id],[module_id],[priv_id] FROM [dbo].[SECURITY_ROLE_MODULE_PRIVILEGE];
 // -- group role
-// SELECT [group_role_id],[role_id],[group_id],[chron_user],[chron_start],[chron_end],[chron_edit_interval_id] FROM [dbo].[SECURITY_GROUP_ROLE];
+// SELECT [group_role_id],[role_id],[group_id] FROM [dbo].[SECURITY_GROUP_ROLE];
 
 	module.exports = {
 		getUsers: getUsers,
 		getUser: getUser,
 		getGroups: getGroups,
+		getApplications: getApplications,
+		getApplicationModules: getApplicationModules,
 		getModules: getModules,
 		getRoles: getRoles,
 		getUserTyes: getUserTyes,

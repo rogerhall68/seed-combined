@@ -3,6 +3,8 @@
 
 angular
 .module('tmiApp')
+// TODO These default values can't be here in src. That is data in too 
+// many places, move to config and build the angular constant RAH 180515
 .constant('SessionData', {
 	"app": 'tmiApp',
 	"setting": {
@@ -11,8 +13,7 @@ angular
 		}
 	},
 	"last": {
-		"state": 'workbench',
-		"freezer": null
+		"state": 'tables' 
 	}
 });
 

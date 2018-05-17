@@ -15,6 +15,7 @@ var LoginCtrl = function($state, $rootScope, SecurityService, SessionService) {
 		SecurityService.login(data, function(result) {
 			SecurityService.loadSession(cntlr.name, function(sessionData) {
 				SessionService.set(sessionData);
+				console.log('SessionService.lastState()', SessionService.lastState());
 				$state.go(SessionService.lastState());
 			});			
 		});

@@ -27,34 +27,9 @@ angular
 
 	hotkeys.bindTo($rootScope)
 	.add({
-	    combo: 'w',
-	    description: 'Workbench',
-	    callback: function() { $location.path('/workbench'); }
-	})
-	.add({
-	    combo: 'f',
-	    description: 'Freezer',
-	    callback: function() { $location.path('/freezer'); }
-	})
-	.add({
-	    combo: 's',
-	    description: 'SOP',
-	    callback: function() { $location.path('/sop'); }
-	})
-	.add({
 	    combo: 'y',
 	    description: 'System',
 	    callback: function() { $location.path('/sys'); }
-	})
-	.add({
-	    combo: 'alt+t',
-	    description: 'Config Types',
-	    callback: function() { $location.path('/storage/type'); }
-	})
-	.add({
-	    combo: 'alt+c',
-	    description: 'Config Categories',
-	    callback: function() { $location.path('/storage/category'); }
 	})
 	;
 

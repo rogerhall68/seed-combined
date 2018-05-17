@@ -4,8 +4,10 @@ module.exports = function(router, db, config) {
 
 	router.route('/security/user').get(getUsers); // module: security-user
 	router.route('/security/user/:user_name').get(getUser); // module: security-user
-
 	router.route('/security/group').get(getGroups); // module: security-group
+
+	router.route('/security/application').get(getApplications); // module: security-application
+	router.route('/security/application/module').get(getApplicationModules); // module: security-application
 	router.route('/security/module').get(getModules); // module: security-module
 	router.route('/security/role').get(getRoles); // module: security-module
 	router.route('/security/user/type').get(getUserTyes); // module: security-module
@@ -23,6 +25,9 @@ module.exports = function(router, db, config) {
 		// db.exec(res, impl.getUsers, null, null, passThru);
 		// db.exec(res, impl.getUsers);
 		console.log('postPrivs', req.body);
+		// 
+		// TODO
+		res.json({ "status": "success" });
 	}
 
 	function getUsers(req, res) {
@@ -36,6 +41,18 @@ module.exports = function(router, db, config) {
 
 	function getGroups(req, res) {
 		db.exec(res, impl.getGroups);
+	}
+
+	function getApplications(req, res) {
+		db.exec(res, impl.getApplications, null, buildRoles);
+	}
+	function buildApplications(data) {
+		data.forEach(function(app){ app.canDelete = false; });
+		return data;
+	}
+
+	function getApplicationModules(req, res) {
+		db.exec(res, impl.getApplicationModules);
 	}
 
 	function getModules(req, res) {
@@ -73,9 +90,12 @@ module.exports = function(router, db, config) {
 		return modules;
 	}
 
-
 	function getRoles(req, res) {
-		db.exec(res, impl.getRoles);
+		db.exec(res, impl.getRoles, null, buildRoles);
+	}
+	function buildRoles(data) {
+		data.forEach(function(role){ role.canDelete = false; });
+		return data;
 	}
 
 	function getUserTyes(req, res) {
